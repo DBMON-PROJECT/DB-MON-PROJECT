@@ -40,8 +40,7 @@ import db.DBConnection;
 * 5. 설명 : Login 관련 Controller 클래스
  */
 public class LoginController implements Initializable{
-	
-	
+
     @FXML private ComboBox<String> tnsCombo;
     @FXML private TextField nameTxt;
     @FXML private PasswordField pwdTxt;
@@ -111,7 +110,7 @@ public class LoginController implements Initializable{
     		}
     	}
     	
-    	Connection conn = DBConnection.getConnection(url, userId, userPwd, true);
+    	Connection conn = DBConnection.createConnection(url, userId, userPwd);
     	
     	if(conn != null){
     		Calendar cal = Calendar.getInstance();
@@ -138,6 +137,7 @@ public class LoginController implements Initializable{
         	}
         	
         	mainController.onlineUserList.put(logInfo, loginDto);
+        	mainController.addLoginHistory(logInfo, loginDto);
         	
         	currentStage.close();
     	}

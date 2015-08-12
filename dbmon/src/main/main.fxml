@@ -15,7 +15,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeMenuHandle" text="Close" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -39,6 +39,7 @@
                   <ComboBox fx:id="loginHisCombo" prefWidth="150.0" />
                 <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginHandle" text="login" />
                   <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startHandle" text="start" />
+                  <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeHandle" text="close" />
               </items>
             </ToolBar>
          </children>
@@ -57,7 +58,7 @@
                                        <children>
                                           <LineChart fx:id="bufCacheChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Cache Hit Ratio">
                                             <xAxis>
-                                              <CategoryAxis side="BOTTOM" />
+                                              <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                             </xAxis>
                                             <yAxis>
                                               <NumberAxis side="LEFT" />
@@ -65,7 +66,7 @@
                                           </LineChart>
                                           <LineChart fx:id="libCacheChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Hit Ratio">
                                              <xAxis>
-                                                <CategoryAxis side="BOTTOM" />
+                                                <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
                                              <yAxis>
                                                 <NumberAxis side="LEFT" />
@@ -73,7 +74,7 @@
                                           </LineChart>
                                           <LineChart fx:id="dicCacheChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Dictionary Cache Hit Ratio">
                                              <xAxis>
-                                                <CategoryAxis side="BOTTOM" />
+                                                <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
                                              <yAxis>
                                                 <NumberAxis side="LEFT" />
@@ -81,7 +82,7 @@
                                           </LineChart>
                                           <LineChart fx:id="inMemoryChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="In Memory Sort Hit Ratio">
                                              <xAxis>
-                                                <CategoryAxis side="BOTTOM" />
+                                                <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
                                              <yAxis>
                                                 <NumberAxis side="LEFT" />

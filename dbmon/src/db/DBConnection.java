@@ -49,21 +49,17 @@ public class DBConnection {
 	* @param newLogin
 	* @return
 	 */
-	public static Connection getConnection(String url,String  userId,String  userPwd, boolean newLogin){
+	public static Connection createConnection(String url, String  userId, String  userPwd){
 		if(connectCnt == 0){
 			classLoding();
 		}
 		
-		try{
-			if(newLogin){
-				if(isConnection()){
-					DbCommon.close(conn);
-				}
+		try{	
+			if(isConnection()){
+				DbCommon.close(conn);
 			}
-			
-			if(!isConnection()){
-				conn = DriverManager.getConnection(url, userId, userPwd);
-			}
+
+			conn = DriverManager.getConnection(url, userId, userPwd);
 			
 			connectCnt++;
 		}catch(SQLException e){
@@ -73,6 +69,14 @@ public class DBConnection {
 		return conn;
 	}
 	
+	/**
+	 * 
+	* 1. 메소드명 : isConnection
+	* 2. 작성일 : 2015. 8. 12. 오후 8:48:40
+	* 3. 작성자 : 길용현
+	* 4. 설명 : Connection 객체가 연결되어있는지 확인
+	* @return
+	 */
 	public static boolean isConnection(){
 		try{
 			if(conn == null || conn.isClosed()){
@@ -82,5 +86,17 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	/**
+	 * 
+	* 1. 메소드명 : getConnection
+	* 2. 작성일 : 2015. 8. 12. 오후 8:54:21
+	* 3. 작성자 : 길용현
+	* 4. 설명 : 생성된 Connection 객체 리턴
+	* @return
+	 */
+	public static Connection getConnection(){
+		return conn;
 	}
 }

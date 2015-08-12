@@ -131,9 +131,9 @@ public class LoginService {
 		ArrayList<LoginLogDto> list = new ArrayList<LoginLogDto>();
 		FileInputStream fis = null;
 		BufferedReader br = null;
-		
+	
 		try{   
-            String filePath = "D:\\workspace\\workspace-java-expert\\dbmon\\src\\login\\loginlog.txt";
+            String filePath = LoginService.class.getResource("").getPath()+"/loginlog.txt";
             
             fis = new FileInputStream(new File(filePath));
             br = new BufferedReader(new InputStreamReader(fis));
@@ -212,7 +212,7 @@ public class LoginService {
 	* @param list
 	 */
 	public void writeLoginLogFile(ArrayList<LoginLogDto> list){
-		String filePath = "D:\\workspace\\workspace-java-expert\\dbmon\\src\\login\\loginlog.txt";
+		String filePath = LoginService.class.getResource("").getPath()+"/loginlog.txt";
 		
 		FileOutputStream fos = null;
 		BufferedWriter bw = null;

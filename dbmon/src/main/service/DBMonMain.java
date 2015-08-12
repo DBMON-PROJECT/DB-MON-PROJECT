@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 * 5. 설명 : DBMon Project Main 클래스
  */
 public class DBMonMain extends Application{
+	public static Stage mainStage;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -23,6 +24,8 @@ public class DBMonMain extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
+		mainStage = primaryStage;
+		
 		VBox root = FXMLLoader.load(getClass().getResource("/main/main.fxml"));
 		
 		primaryStage.setScene(new Scene(root));

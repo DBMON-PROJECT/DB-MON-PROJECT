@@ -77,12 +77,27 @@ public class ControlCommon {
 	* 1. 메소드명 : insertCombo
 	* 2. 작성일 : 2015. 8. 11. 오후 1:39:51
 	* 3. 작성자 : 길용현
-	* 4. 설명 : ComboBox 데이터 삽입
+	* 4. 설명 : ComboBox 전체 데이터 삽입
 	* @param comboBox
 	* @param list
 	 */
 	public void insertCombo(ComboBox comboBox, List list){
 		ObservableList dataList = FXCollections.observableArrayList(list);
 		comboBox.setItems(dataList);
+		comboBox.setValue(list.get(0));
+	}
+	
+	/**
+	 * 
+	* 1. 메소드명 : addCombo
+	* 2. 작성일 : 2015. 8. 12. 오후 8:06:49
+	* 3. 작성자 : 길용현
+	* 4. 설명 : 기존 ComboBox 뒤에 값 추가
+	* @param comboBox
+	* @param obj
+	 */
+	public void addCombo(ComboBox comboBox, Object obj){
+		comboBox.getItems().add(obj);
+		comboBox.setValue(obj);
 	}
 }
