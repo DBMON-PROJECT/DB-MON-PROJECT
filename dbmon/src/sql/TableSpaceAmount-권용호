@@ -1,0 +1,83 @@
+--테이블스페이스별 용량 확인 쿼리문(MB 단위)
+SELECT B.TABLESPACE         --테이블스페이스 이름
+      ,B.TOTALMB            --전체용량 MB
+      ,B.USEDMB             --사용중인 용량 MB
+      ,B.FREEMB             --사용가능 용량 MB
+      ,B.USED_PER           --사용중인 용량 퍼센트
+      ,B.FREE_PER           --사용가능 용량 퍼센트
+      ,B.MAX_DBF_MB         --각 테이블 스페이스 데이터파일의 가장 큰 용량
+      ,B.MIN_DBF_MB         --각 테이블 스페이스 데이터파일의 가장 작은 용량
+      ,B.AVG_DBF_MB         ----각 테이블 스페이스 데이터파일의 평균 용량
+      ,B.DISTRIBUTION ||'%'  DISTRIBUTION_PER   -- 평균용량+최소용량/평균용량*100
+      -- 
+      ,CASE WHEN B.DISTRIBUTION > 90 THEN 'DANGER' --위험
+            WHEN B.DISTRIBUTION > 70 THEN 'WARNING' --경고
+            WHEN B.DISTRIBUTION > 50 THEN 'PURPOSE' --적합
+            WHEN B.DISTRIBUTION = 0  THEN 'PERFECT'--완벽
+        END "DIST_STATUS"   --분포 상태
+      ,B.FILE_CNT
+FROM (SELECT   SUBSTR(A.TABLESPACE_NAME,1,30) TABLESPACE,
+         ROUND(SUM(A.TOTAL1)/1024/1024,1) TOTALMB,
+         ROUND(SUM(A.TOTAL1)/1024/1024,1)-ROUND(SUM(A.SUM1)/1024/1024,1) USEDMB,
+         ROUND(SUM(A.SUM1)/1024/1024,1) FREEMB,
+         ROUND((ROUND(SUM(A.TOTAL1)/1024/1024,1)-ROUND(SUM(A.SUM1)/1024/1024,1))/ROUND(SUM(A.TOTAL1)/1024/1024,1)*100,2) || '%' USED_PER,
+         ROUND(ROUND(SUM(A.SUM1)/1024/1024,1)/ROUND(SUM(A.TOTAL1)/1024/1024,1)*100,2) || '%' FREE_PER,
+         ROUND(SUM(A.MAXB)/1024/1024,3) MAX_DBF_MB,
+         ROUND(SUM(A.MINB)/1024/1024,3) MIN_DBF_MB,
+         ROUND(SUM(A.AVGB)/1024/1024,3) AVG_DBF_MB,
+         
+         -- ((평균용량-최소용량/평균용량*100)+(최대용량+평균용량/최대용량*100)/2)  파일용량들의 분포도 측정을 위해 사용
+         (ROUND((ROUND(SUM(A.AVGB)/1024/1024,3)-ROUND(SUM(A.MINB)/1024/1024,3))/ROUND(SUM(A.AVGB)/1024/1024,3)*100,2)
+         +ROUND((ROUND(SUM(A.MAXB)/1024/1024,2)-ROUND(SUM(A.AVGB)/1024/1024,3))/ROUND(SUM(A.MAXB)/1024/1024,2)*100,2))/2 DISTRIBUTION,
+         --ROUND((ROUND(SUM(A.MAXB)/1024/1024,3)-ROUND(SUM(A.MINB)/1024/1024,3))/ROUND(SUM(A.MAXB)/1024/1024,3)*100,2) || '%' DBF_PER,
+         MAX(A.DFCNT) FILE_CNT  --각 테이블 스페이스 데이터파일의 개수
+FROM     (SELECT   TABLESPACE_NAME      
+                  ,0                    TOTAL1
+                  ,SUM(BYTES)           SUM1    -- 사용가능 용량(BYTES)
+                  ,0                    MAXB
+                  ,0                    MINB
+                  ,0                    AVGB
+                  ,0                    DFCNT
+          FROM     DBA_FREE_SPACE       -- 나머지 공간(빈공간)
+          GROUP BY TABLESPACE_NAME
+          UNION
+          SELECT   TABLESPACE_NAME
+                  ,SUM(BYTES)      -- 전체 용량(BYTES)
+                  ,0
+                  ,MAX(BYTES)      -- 데이터파일 중 가장 큰 값
+                  ,MIN(BYTES)      -- 데이터파일 중 가장 작은 값
+                  ,AVG(BYTES)      -- 데이터파일들의 평균 값
+                  ,COUNT(TABLESPACE_NAME) --데이터파일의 개수
+          FROM     DBA_DATA_FILES   -- 테이터 파일의 값들
+          GROUP BY TABLESPACE_NAME) A
+GROUP BY A.TABLESPACE_NAME
+ORDER BY TABLESPACE) B ;
+
+
+
+----------------------- 참고자료 -----------------------------
+--해당 컬럼들의 의미
+select TABLESPACE_NAME      --범위를 포함하는 테이블의 이름
+      ,FILE_ID              --범위를 포함하는 파일의 파일 식별자 번호
+      ,BLOCK_ID             --범위의 시작 블록번호
+      ,BYTES                --정도의 크기 (바이트)
+      ,BLOCKS               --정도의 크기(오라클 블록)
+      ,RELATIVE_FNO         --범위를 포함하는 파일의 상대 파일 번호
+from dba_free_space;
+
+--해당 컬럼들의 의미
+select FILE_NAME            --데이터베이스 파일 이름
+      ,FILE_ID              --파일의 식별자 번호
+      ,TABLESPACE_NAME      --파일이 속하는 테이블 이름
+      ,BYTES                --파일 크기(바이트)
+      ,BLOCKS               --오라클 블록에 있는 파일의 크기
+      ,STATUS               --파일 상태(AVAILABLE, INVALID)
+      ,RELATIVE_FNO         --상대 파일번호
+      ,AUTOEXTENSIBLE       --자동 확장 표시
+      ,MAXBYTES             --바이트 최대 파일 크기
+      ,MAXBLOCKS            --블록에서 최대 파일 크기
+      ,INCREMENT_BY         --
+      ,USER_BYTES           --사용자 데이터에 해당하는 파일크기
+      ,USER_BLOCKS          --데이터에 의해 이용 될 수 있는 블록 개수
+      ,ONLINE_STATUS        --파일의 온라인 상태(SYSOFF, SYSTEM, 
+from dba_data_files;
