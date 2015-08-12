@@ -6,7 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.ResourceBundle;
+
+import org.apache.log4j.Logger;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -25,10 +28,8 @@ import javafx.stage.Stage;
 import login.dto.LoginDto;
 import login.dto.LoginLogDto;
 import main.service.MainController;
-
 import common.ControlCommon;
 import common.TableColumnCommon;
-
 import db.DBConnection;
 
 /**
@@ -40,7 +41,7 @@ import db.DBConnection;
 * 5. 설명 : Login 관련 Controller 클래스
  */
 public class LoginController implements Initializable{
-	
+	private Logger LOG = Logger.getLogger(LoginController.class);
 	
     @FXML private ComboBox<String> tnsCombo;
     @FXML private TextField nameTxt;
@@ -107,7 +108,8 @@ public class LoginController implements Initializable{
     	
     	for(LoginDto info : tnsInfoList){
     		if(tnsName.equals(info.getUserName())){
-    			url = "jdbc:oracle:thin:@"+info.getHost()+":"+info.getPort()+":"+info.getServiceName();
+//    			url = "jdbc:oracle:thin:@"+info.getHost()+":"+info.getPort()+":"+info.getServiceName();
+    			url = "jdbc:oracle:thin:@localhost:1521:xe";
     		}
     	}
     	
@@ -168,9 +170,15 @@ public class LoginController implements Initializable{
 		// tnsname 정보를 콤보박스에 넣기
 		ArrayList<String> tnsList = new ArrayList<String>();
 		
+		LOG.debug("LoginController -> tnsInfoList.size() : "+tnsInfoList.size());
+		
 		for(Object obj : tnsInfoList){
 			LoginDto info = (LoginDto)obj;
 			tnsList.add(info.getUserName());
+		}
+		for (String userName : tnsList) {
+			
+			LOG.debug("콤보박스에 들어가는 리스트 tnsList"+userName);
 		}
 		common.insertCombo(tnsCombo, tnsList);
 		

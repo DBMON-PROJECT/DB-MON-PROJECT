@@ -18,6 +18,8 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import login.dto.LoginDto;
 import login.dto.LoginLogDto;
 
@@ -30,7 +32,12 @@ import login.dto.LoginLogDto;
 * 5. 설명 : 로그인 관련 정보를 가져오는 기능을 수행하는 클래스
  */
 public class LoginService {
+	
+	private Logger LOG = Logger.getLogger(LoginService.class);
+	
 	private static LoginService instance;
+	
+	 String path = LoginService.class.getResource("").getPath();
 	
 	private LoginService(){
 		
@@ -53,9 +60,11 @@ public class LoginService {
 	* @return
 	 */
 	public String readRegistry(){
-		/*try {
+		try {
 			Process process = Runtime.getRuntime().exec(
 					"reg query HKLM\\Software\\oracle\\key_xe /v oracle_home");
+//			Process process = Runtime.getRuntime().exec(
+//					"reg query HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\ORACLE\\KEY_OraClient11g_home1 /v oracle_home");
 
 			StreamReader reader = new StreamReader(process.getInputStream());
 			reader.start();
@@ -67,8 +76,8 @@ public class LoginService {
 			return output.substring(output.indexOf("REG_SZ") + 6).trim();
 		} catch (Exception e) {
 			return null;
-		}*/
-		return "C:\\app\\pc06\\product\\11.2.0\\dbhome_1";
+		}
+//		return "C:\\app\\pc06\\product\\11.2.0\\dbhome_1";
 	}
 	
 	/**
@@ -81,9 +90,11 @@ public class LoginService {
 	* @return
 	 */
 	public ArrayList<LoginDto> getUserInfo(String registryValue){
-		//String oraHomeAdd = registryValue.replace("\\", "\\\\")+"\\\\network\\\\ADMIN\\\\";
-		String oraHomeAdd = registryValue+"\\NETWORK\\ADMIN\\";
+		String oraHomeAdd = registryValue.replace("\\", "\\\\")+"\\\\network\\\\ADMIN\\\\";
+//		String oraHomeAdd = registryValue+"\\NETWORK\\ADMIN\\";
 		StringBuffer str = new StringBuffer();
+		LOG.debug("registryValue : "+registryValue);
+		LOG.debug("oraHomeAdd : "+oraHomeAdd);
 		
 		try{
 			FileInputStream fis = new FileInputStream(oraHomeAdd+"tnsnames.ora");
@@ -99,21 +110,27 @@ public class LoginService {
 		}catch(Exception cnfe){
 			cnfe.printStackTrace();
 		}
-
+		LOG.debug("[tnsnames.ora] : "+str);
+//		String pattern = 
+//		"([A-z,a-z, ]*)(=\r\n)(.*)([[ ]*[(][A-z,a-z]*=\r\n]*)(.*)(HOST[ ]?=)(.*)"
+//		+ "([)][(])(PORT[ ]?=)(.*)([)][)])([[ ]*[(][A-z,a-z]*=[.*,[)]]?\r\n]*)([(]SERVICE_NAME\\s*=)(\\w*)[)](.*)";
+		
 		String pattern = 
-		"([A-z,a-z, ]*)(=\r\n)(.*)([[ ]*[(][A-z,a-z]*=\r\n]*)(.*)(HOST[ ]?=)(.*)"
-		+ "([)][(])(PORT[ ]?=)(.*)([)][)])([[ ]*[(][A-z,a-z]*=[.*,[)]]?\r\n]*)([(]SERVICE_NAME\\s*=)(\\w*)[)](.*)";
+				"([A-z,a-z, ]*)(=\r\n)(.*)([[ ]*[(][A-z,a-z]*=\r\n]*)(.*)(HOST[ ]?=)(.*)"
+				+ "([)][(])(PORT[ ]?=)(.*)([)][)])([[ ]*[(][A-z,a-z]*=[.*,[)]]?\r\n]*)([(]SERVICE_NAME[ ]?=)(.*)([)])";
+		
 		Pattern pt = Pattern.compile(pattern);
 		Matcher mc = pt.matcher(str);
 		
 		ArrayList<LoginDto> loginInfo = new ArrayList<LoginDto>();
 		
 		while(mc.find()){
+			LOG.debug("getUserInfo 내 while(mc.find())문 동작");
 			loginInfo.add(new LoginDto(mc.group(1), mc.group(7), mc.group(10), mc.group(),mc.group(14)));
 		}
 	
 		if(mc.matches()){
-			System.out.println("노매치컨텐츠");
+			LOG.debug("노 매치 컨트롤");
 		}
 		
 		return loginInfo;
@@ -132,9 +149,11 @@ public class LoginService {
 		FileInputStream fis = null;
 		BufferedReader br = null;
 		
+		
 		try{   
-            String filePath = "D:\\workspace\\workspace-java-expert\\dbmon\\src\\login\\loginlog.txt";
-            
+			path.replace("\\", "\\\\");
+            String filePath = path+"loginlog.txt";
+            LOG.debug("getLoginLogFile path : "+filePath);
             fis = new FileInputStream(new File(filePath));
             br = new BufferedReader(new InputStreamReader(fis));
             
@@ -212,8 +231,9 @@ public class LoginService {
 	* @param list
 	 */
 	public void writeLoginLogFile(ArrayList<LoginLogDto> list){
-		String filePath = "D:\\workspace\\workspace-java-expert\\dbmon\\src\\login\\loginlog.txt";
-		
+		path.replace("\\", "\\\\");
+		String filePath = path+"loginlog.txt";
+		LOG.debug("writeLoginLogFile path : "+filePath);
 		FileOutputStream fos = null;
 		BufferedWriter bw = null;
 		
