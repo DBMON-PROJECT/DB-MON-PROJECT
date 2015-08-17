@@ -1,0 +1,8 @@
+@CHARSET "EUC-KR";
+.default-color0.chart-series-line{
+	-fx-stroke: #9CC4E4, 1;
+}
+
+.default-color0.chart-line-symbol.series0{
+	-fx-background-color: #9CC4E4;
+}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -52,43 +53,46 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="350.0">
                            <children>
-                              <TitledPane prefHeight="793.0" prefWidth="350.0" text="Performence">
+                              <TitledPane prefHeight="772.0" prefWidth="367.0" text="Performence">
                                  <content>
                                     <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                                        <children>
-                                          <LineChart fx:id="bufCacheChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Cache Hit Ratio">
+                                          <LineChart fx:id="bufCacheChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Cache Hit Ratio">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                             </xAxis>
                                             <yAxis>
-                                              <NumberAxis side="LEFT" />
+                                              <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
                                             </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="libCacheChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Hit Ratio">
+                                          <LineChart fx:id="libCacheChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Hit Ratio">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
                                              <yAxis>
-                                                <NumberAxis side="LEFT" />
+                                                <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
                                              </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="dicCacheChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Dictionary Cache Hit Ratio">
+                                          <LineChart fx:id="dicCacheChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Dictionary Cache Hit Ratio">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
                                              <yAxis>
-                                                <NumberAxis side="LEFT" />
+                                                <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
                                              </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="inMemoryChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="In Memory Sort Hit Ratio">
+                                          <LineChart fx:id="inMemoryChart" centerShape="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="In Memory Sort Hit Ratio">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
                                              <yAxis>
-                                                <NumberAxis side="LEFT" />
+                                                <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
                                              </yAxis>
                                           </LineChart>
                                        </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
                                     </VBox>
                                  </content>
                               </TitledPane>
@@ -104,31 +108,31 @@
                            <children>
                               <VBox prefHeight="400.0" prefWidth="951.0">
                                  <children>
-                                    <TitledPane prefHeight="381.0" prefWidth="941.0" text="Wait Event">
+                                    <TitledPane prefHeight="395.0" prefWidth="977.0" text="Wait Event">
                                        <content>
-                                          <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                                          <VBox prefHeight="380.0" prefWidth="100.0" spacing="5.0">
                                              <children>
                                                 <HBox prefHeight="200.0" prefWidth="200.0" spacing="5.0">
                                                    <children>
-                                                      <LineChart fx:id="dbScatteredChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Scattered Read">
+                                                      <LineChart fx:id="dbScatteredChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Scattered Read">
                                                         <xAxis>
-                                                          <CategoryAxis side="BOTTOM" />
+                                                          <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                         </xAxis>
                                                         <yAxis>
                                                           <NumberAxis side="LEFT" />
                                                         </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="dbSequentialChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Sequential Read">
+                                                      <LineChart fx:id="dbSequentialChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Sequential Read">
                                                          <xAxis>
-                                                            <CategoryAxis side="BOTTOM" />
+                                                            <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                          </xAxis>
                                                          <yAxis>
                                                             <NumberAxis side="LEFT" />
                                                          </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="logFileSyncChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log File Sync">
+                                                      <LineChart fx:id="logFileSyncChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log File Sync">
                                                          <xAxis>
-                                                            <CategoryAxis side="BOTTOM" />
+                                                            <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                          </xAxis>
                                                          <yAxis>
                                                             <NumberAxis side="LEFT" />
@@ -138,25 +142,25 @@
                                                 </HBox>
                                                 <HBox prefHeight="200.0" prefWidth="200.0" spacing="5.0">
                                                    <children>
-                                                      <LineChart fx:id="bufBusyWaitsChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Busy Waits">
+                                                      <LineChart fx:id="bufBusyWaitsChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Busy Waits">
                                                         <xAxis>
-                                                          <CategoryAxis side="BOTTOM" />
+                                                          <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                         </xAxis>
                                                         <yAxis>
                                                           <NumberAxis side="LEFT" />
                                                         </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="logBufferSpaceChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log Buffer Space">
+                                                      <LineChart fx:id="logBufferSpaceChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log Buffer Space">
                                                          <xAxis>
-                                                            <CategoryAxis side="BOTTOM" />
+                                                            <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                          </xAxis>
                                                          <yAxis>
                                                             <NumberAxis side="LEFT" />
                                                          </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="libraryCacheLockChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Lock">
+                                                      <LineChart fx:id="libraryCacheLockChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Lock">
                                                          <xAxis>
-                                                            <CategoryAxis side="BOTTOM" />
+                                                            <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                          </xAxis>
                                                          <yAxis>
                                                             <NumberAxis side="LEFT" />
@@ -165,57 +169,76 @@
                                                    </children>
                                                 </HBox>
                                              </children>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
                                           </VBox>
                                        </content>
                                     </TitledPane>
                                  </children>
                                  <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    <Insets right="5.0" top="5.0" />
                                  </padding>
                               </VBox>
-                              <HBox prefHeight="400.0" prefWidth="200.0">
+                              <VBox prefHeight="380.0" prefWidth="951.0" spacing="5.0">
                                  <children>
-                                    <VBox prefHeight="371.0" prefWidth="732.0" spacing="5.0">
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
-                                          <TitledPane prefHeight="200.0" prefWidth="200.0" text="JDBC Connection">
-                                             <content>
-                                                <BarChart fx:id="jdbcConnChart">
-                                                  <xAxis>
-                                                    <CategoryAxis side="BOTTOM" />
-                                                  </xAxis>
-                                                  <yAxis>
-                                                    <NumberAxis side="LEFT" />
-                                                  </yAxis>
-                                                </BarChart>
-                                             </content>
-                                          </TitledPane>
                                           <TitledPane prefHeight="200.0" prefWidth="200.0" text="TOP3 SQL">
                                              <content>
-                                                <BarChart fx:id="topSqlChart">
-                                                  <xAxis>
-                                                    <CategoryAxis side="BOTTOM" />
-                                                  </xAxis>
-                                                  <yAxis>
-                                                    <NumberAxis side="LEFT" />
-                                                  </yAxis>
-                                                </BarChart>
+                                                <HBox prefHeight="50.0" prefWidth="944.0" spacing="5.0">
+                                                   <children>
+                                                      <BarChart fx:id="BufferGetsChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Gets">
+                                                        <xAxis>
+                                                          <CategoryAxis side="BOTTOM" />
+                                                        </xAxis>
+                                                        <yAxis>
+                                                          <NumberAxis side="LEFT" />
+                                                        </yAxis>
+                                                      </BarChart>
+                                                      <BarChart fx:id="cpuTimeChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="CPU Time">
+                                                         <xAxis>
+                                                            <CategoryAxis side="BOTTOM" />
+                                                         </xAxis>
+                                                         <yAxis>
+                                                            <NumberAxis side="LEFT" />
+                                                         </yAxis>
+                                                      </BarChart>
+                                                      <BarChart fx:id="elapsedTimeChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Elapsed Time">
+                                                         <xAxis>
+                                                            <CategoryAxis side="BOTTOM" />
+                                                         </xAxis>
+                                                         <yAxis>
+                                                            <NumberAxis side="LEFT" />
+                                                         </yAxis>
+                                                      </BarChart>
+                                                      <BarChart fx:id="executionsChart" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Executions">
+                                                         <xAxis>
+                                                            <CategoryAxis side="BOTTOM" />
+                                                         </xAxis>
+                                                         <yAxis>
+                                                            <NumberAxis side="LEFT" />
+                                                         </yAxis>
+                                                      </BarChart>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </HBox>
                                              </content>
                                           </TitledPane>
                                        </children>
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </padding>
                                     </VBox>
-                                    <VBox prefHeight="371.0" prefWidth="214.0">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
+                                    <HBox prefHeight="200.0" prefWidth="946.0" spacing="5.0">
                                        <children>
-                                          <TitledPane prefHeight="384.0" prefWidth="214.0" text="Online Users">
+                                          <TitledPane prefHeight="200.0" prefWidth="710.0" text="JDBC Connection">
                                              <content>
-                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
                                                    <children>
-                                                      <BarChart fx:id="onlineUsersChart">
+                                                      <BarChart fx:id="jdbcConnectionChart" prefHeight="150.0" prefWidth="706.0" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="JDBC Connection Count">
                                                         <xAxis>
                                                           <CategoryAxis side="BOTTOM" />
                                                         </xAxis>
@@ -224,16 +247,32 @@
                                                         </yAxis>
                                                       </BarChart>
                                                    </children>
-                                                </VBox>
+                                                </HBox>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane prefHeight="200.0" prefWidth="236.0" text="Online Users">
+                                             <content>
+                                                <HBox prefHeight="100.0" prefWidth="200.0">
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label fx:id="onlineUsersLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="173.0" prefWidth="253.0" text="0">
+                                                         <font>
+                                                            <Font size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
                                              </content>
                                           </TitledPane>
                                        </children>
-                                       <padding>
-                                          <Insets bottom="5.0" right="5.0" top="5.0" />
-                                       </padding>
-                                    </VBox>
+                                    </HBox>
                                  </children>
-                              </HBox>
+                                 <padding>
+                                    <Insets bottom="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
                            </children>
                         </VBox>
                      </children>

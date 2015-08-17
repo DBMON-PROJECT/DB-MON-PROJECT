@@ -212,6 +212,8 @@ public class LoginController implements Initializable{
 						LoginService loginTemp = LoginService.getInstance();
 						pwdTxt.setText(loginTemp.getUserPassword(tnsName, userName));
 					}
+					
+					pwdTxt.requestFocus();
 				}
 			});
 			return row;

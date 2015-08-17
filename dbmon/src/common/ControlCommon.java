@@ -84,7 +84,9 @@ public class ControlCommon {
 	public void insertCombo(ComboBox comboBox, List list){
 		ObservableList dataList = FXCollections.observableArrayList(list);
 		comboBox.setItems(dataList);
-		comboBox.setValue(list.get(0));
+		if(list.size() != 0){
+			comboBox.setValue(list.get(0));
+		}
 	}
 	
 	/**

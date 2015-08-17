@@ -12,12 +12,11 @@ public class LoginDto {
 	private String userName;
 	private String host;
 	private String port;
-	private String userContent;
 	private String serviceName;
-	
+	private String userContent;
 	
 	public LoginDto(String userName, String host, String port,
-			String userContent,String serviceName) {
+			String serviceName, String userContent) {
 		this.userName = userName;
 		this.host = host;
 		this.port = port;

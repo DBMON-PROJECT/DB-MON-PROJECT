@@ -49,7 +49,7 @@ public class LoginService {
 	* 1. 메소드명 : readRegistry
 	* 2. 작성일 : 2015. 8. 11. 오전 10:41:50
 	* 3. 작성자 : 길용현
-	* 4. 설명 : ORACLE_HOME Registry 값을 읽어오는 기능
+	* 4. 설명 : ORACLE_HOME Registry 값을 읽어오는 기능 (HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\ORACLE\KEY_OraDb11g_home1)
 	* @return
 	 */
 	public String readRegistry(){
@@ -68,7 +68,7 @@ public class LoginService {
 		} catch (Exception e) {
 			return null;
 		}*/
-		return "C:\\app\\pc06\\product\\11.2.0\\dbhome_1";
+		return "C:\\app\\kyh\\product\\11.2.0\\dbhome_1";
 	}
 	
 	/**
@@ -100,16 +100,28 @@ public class LoginService {
 			cnfe.printStackTrace();
 		}
 
-		String pattern = 
+		/*String pattern = 
 		"([A-z,a-z, ]*)(=\r\n)(.*)([[ ]*[(][A-z,a-z]*=\r\n]*)(.*)(HOST[ ]?=)(.*)"
 		+ "([)][(])(PORT[ ]?=)(.*)([)][)])([[ ]*[(][A-z,a-z]*=[.*,[)]]?\r\n]*)([(]SERVICE_NAME\\s*=)(\\w*)[)](.*)";
+		*/
+		
+		String pattern = "(\\w+)(\\s*=\\s*\r\n)"+
+                "(\\s*[(]\\s*DESCRIPTION\\s*=\\s*\r\n)"+
+		         "(\\s*[(]\\s*ADDRESS\\s*=\\s*[(]\\s*PROTOCOL\\s*=\\s*\\w+\\s*[)])"+
+                "(\\s*[(]\\w+\\s*=\\s*)([\\w|\\.]+)(\\s*[)]\\s*[(]\\s*PORT\\s*=\\s*)(\\w+)(\\s*[)]\\s*[)]\\s*\r\n)"+
+				 "(\\s*[(]\\s*CONNECT_DATA\\s*=\\s*\r\n)"+
+                "(\\s*[(]\\s*SERVER\\s*=\\s*DEDICATED\\s*[)]\\s*\r\n)"+
+				 "(\\s*[(]\\s*SERVICE_NAME\\s*=\\s*)(\\w+)([)]\\s*\r\n)"+
+                "(\\s*[)]\r\n)(\\s*[)]\r\n)";
+		
+		
 		Pattern pt = Pattern.compile(pattern);
 		Matcher mc = pt.matcher(str);
 		
 		ArrayList<LoginDto> loginInfo = new ArrayList<LoginDto>();
 		
 		while(mc.find()){
-			loginInfo.add(new LoginDto(mc.group(1), mc.group(7), mc.group(10), mc.group(),mc.group(14)));
+			loginInfo.add(new LoginDto(mc.group(1), mc.group(6), mc.group(8), mc.group(13),mc.group()));
 		}
 	
 		if(mc.matches()){
