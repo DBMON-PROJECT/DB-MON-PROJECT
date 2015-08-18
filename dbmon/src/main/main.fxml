@@ -37,17 +37,18 @@
          <children>
             <ToolBar prefHeight="33.0" prefWidth="1350.0">
               <items>
-                  <ComboBox fx:id="loginHisCombo" prefWidth="150.0" />
-                <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginHandle" text="login" />
+                  <ComboBox fx:id="loginHisCombo" onAction="#loginComboHandle" prefWidth="150.0" />
+                <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginHandle" text="connect" />
+                  <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeHandle" text="disconnect" />
                   <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startHandle" text="start" />
-                  <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeHandle" text="close" />
+                  <Button fx:id="testBtn" mnemonicParsing="false" onAction="#testHandle" text="test" />
               </items>
             </ToolBar>
          </children>
       </HBox>
       <TabPane>
          <tabs>
-            <Tab closable="false" text="실시간 모니터링">
+            <Tab closable="false" text="Realtime Monitoring">
                <content>
                   <HBox prefHeight="782.0" prefWidth="1300.0">
                      <children>
@@ -57,7 +58,7 @@
                                  <content>
                                     <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                                        <children>
-                                          <LineChart fx:id="bufCacheChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Cache Hit Ratio">
+                                          <LineChart fx:id="bufCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Cache Hit Ratio">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                             </xAxis>
@@ -65,7 +66,7 @@
                                               <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
                                             </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="libCacheChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Hit Ratio">
+                                          <LineChart fx:id="libCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Hit Ratio">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
@@ -73,7 +74,7 @@
                                                 <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
                                              </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="dicCacheChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Dictionary Cache Hit Ratio">
+                                          <LineChart fx:id="dicCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Dictionary Cache Hit Ratio">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
@@ -81,7 +82,7 @@
                                                 <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
                                              </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="inMemoryChart" centerShape="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="In Memory Sort Hit Ratio">
+                                          <LineChart fx:id="inMemoryChart" animated="false" centerShape="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="In Memory Sort Hit Ratio">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
@@ -114,7 +115,7 @@
                                              <children>
                                                 <HBox prefHeight="200.0" prefWidth="200.0" spacing="5.0">
                                                    <children>
-                                                      <LineChart fx:id="dbScatteredChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Scattered Read">
+                                                      <LineChart fx:id="dbScatteredChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Scattered Read">
                                                         <xAxis>
                                                           <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                         </xAxis>
@@ -122,7 +123,7 @@
                                                           <NumberAxis side="LEFT" />
                                                         </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="dbSequentialChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Sequential Read">
+                                                      <LineChart fx:id="dbSequentialChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Sequential Read">
                                                          <xAxis>
                                                             <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                          </xAxis>
@@ -130,7 +131,7 @@
                                                             <NumberAxis side="LEFT" />
                                                          </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="logFileSyncChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log File Sync">
+                                                      <LineChart fx:id="logFileSyncChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log File Sync">
                                                          <xAxis>
                                                             <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                          </xAxis>
@@ -142,7 +143,7 @@
                                                 </HBox>
                                                 <HBox prefHeight="200.0" prefWidth="200.0" spacing="5.0">
                                                    <children>
-                                                      <LineChart fx:id="bufBusyWaitsChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Busy Waits">
+                                                      <LineChart fx:id="bufBusyWaitsChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Busy Waits">
                                                         <xAxis>
                                                           <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                         </xAxis>
@@ -150,7 +151,7 @@
                                                           <NumberAxis side="LEFT" />
                                                         </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="logBufferSpaceChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log Buffer Space">
+                                                      <LineChart fx:id="logBufferSpaceChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log Buffer Space">
                                                          <xAxis>
                                                             <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                          </xAxis>
@@ -158,7 +159,7 @@
                                                             <NumberAxis side="LEFT" />
                                                          </yAxis>
                                                       </LineChart>
-                                                      <LineChart fx:id="libraryCacheLockChart" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Lock">
+                                                      <LineChart fx:id="libraryCacheLockChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Lock">
                                                          <xAxis>
                                                             <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                                          </xAxis>
@@ -278,6 +279,16 @@
                      </children>
                   </HBox>
                </content>
+            </Tab>
+            <Tab text="Session Monitoring">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Schema Monitoring">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
             </Tab>
          </tabs>
       </TabPane>

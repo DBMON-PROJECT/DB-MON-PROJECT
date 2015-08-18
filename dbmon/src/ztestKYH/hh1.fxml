@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="781.0" prefWidth="1274.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <VBox layoutX="246.0" layoutY="226.0" prefHeight="781.0" prefWidth="1274.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox prefHeight="465.0" prefWidth="1274.0">
+               <children>
+                  <ListView prefHeight="457.0" prefWidth="171.0" />
+                  <PieChart prefHeight="457.0" prefWidth="308.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="333.0" prefWidth="1274.0">
+               <children>
+                  <TableView prefHeight="325.0" prefWidth="1329.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -33,8 +33,10 @@ import main.dao.RealtimeMonDao;
 import main.dto.PerformenceDto;
 import main.dto.TopSqlDto;
 import main.dto.WaitEventDto;
+
 import common.ControlCommon;
 import common.DialogCommon;
+
 import db.DBConnection;
 import db.DbCommon;
 
@@ -74,7 +76,9 @@ public class MainController implements Initializable{
     @FXML private Button startBtn;
     @FXML private Button closeBtn;
     
+    // login combo box
     @FXML private ComboBox<String> loginHisCombo;
+    public static String currLoginInfo;
     
     // 현재 접속중인 정보를 담는 Map 객체
     public static HashMap<LoginLogDto, LoginDto> onlineUserList = new HashMap<LoginLogDto, LoginDto>();
@@ -120,6 +124,14 @@ public class MainController implements Initializable{
     private XYChart.Series<String, Number> jdbcConnectSeries;
     private ObservableList jdbcConnectList;
     
+    @FXML
+    private Button testBtn;
+    
+    @FXML
+    void testHandle(ActionEvent event) {
+    	System.out.println(thread.getState());
+    }
+    
     @Override
 	protected void finalize() throws Throwable {
 		if(DBConnection.isConnection()){
@@ -131,6 +143,73 @@ public class MainController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		initChartData();
 		setChartList();
+	}
+	
+	/**
+	 * 
+	* 1. 메소드명 : loginComboHandle
+	* 2. 작성일 : 2015. 8. 17. 오후 11:22:56
+	* 3. 작성자 : 길용현
+	* 4. 설명 : login combo box 이벤트 처리
+	* @param event
+	 */
+	@FXML
+	void loginComboHandle(ActionEvent event) {
+		String selectItem = loginHisCombo.getSelectionModel().getSelectedItem();
+		
+		if(selectItem != null){
+			if(currLoginInfo == null){
+				currLoginInfo = selectItem;
+			
+				if(!DBConnection.isConnection()){
+					createConnection();
+				}
+			}else{
+				if(!currLoginInfo.equals(selectItem)){
+					if(thread != null && (thread.getState().toString().equals("TIMED_WAITING"))){
+						thread.stopThread();
+						thread.interrupt();
+					}
+				
+					if(DBConnection.isConnection()){
+						DbCommon.close(DBConnection.getConnection());
+					}
+					currLoginInfo = selectItem;
+				
+					createConnection();
+				}
+			}
+		}
+    }
+	
+	/**
+	 * 
+	* 1. 메소드명 : createConnection
+	* 2. 작성일 : 2015. 8. 18. 오후 2:39:37
+	* 3. 작성자 : 길용현
+	* 4. 설명 : 현재 접속 유저로 Connection 객체 생성
+	 */
+	private void createConnection(){
+		String tnsName = currLoginInfo.substring(currLoginInfo.indexOf("@")+1);
+		String userId = currLoginInfo.substring(0, currLoginInfo.indexOf("@"));
+		String userPwd = "";
+		String url = "";
+		
+		for(LoginDto dto : LoginController.tnsInfoList){
+			if(dto.getUserName().equals(tnsName)){
+				url = "jdbc:oracle:thin:@"+dto.getHost()+":"+dto.getPort()+":"+dto.getServiceName();
+				break;
+			}
+		}
+				
+		for(LoginLogDto logDto : onlineUserList.keySet()){
+			if(logDto.getUserName().equals(userId)){
+				userPwd = logDto.getUserPwd();
+				break;
+			}
+		}
+
+		DBConnection.createConnection(url, userId, userPwd);
 	}
 	
 	/**
@@ -186,14 +265,27 @@ public class MainController implements Initializable{
      */
     @FXML
     void startHandle(ActionEvent event) {
-    	if(!DBConnection.isConnection()){
-    		DialogCommon.alert("데이터베이스 연결이 되어있지 않습니다.");
-    		return;
+    	if(startBtn.getText().equals("start")){
+    		if(!DBConnection.isConnection()){
+        		DialogCommon.alert("데이터베이스 연결이 되어있지 않습니다.");
+        		return;
+        	}
+        	
+    		if((thread == null) || (thread.getState().toString().equals("TERMINATED"))){
+    			thread = new MainThread();
+            	thread.setDaemon(true);
+            	thread.start();
+    		}else{
+    			thread.resumeThread();
+    		}
+        
+        	startBtn.setText("stop");
+    	}else{
+    		if(thread != null && !(thread.getState().toString().equals("TERMINATED"))){
+    			thread.suspendThread();
+    			startBtn.setText("start");
+    		}
     	}
-    	
-    	thread = new MainThread();
-    	thread.setDaemon(true);
-    	thread.start();
     }
 
     /**
@@ -209,6 +301,16 @@ public class MainController implements Initializable{
     	if(DBConnection.isConnection()){
     		if(DialogCommon.confirm(loginHisCombo.getSelectionModel().getSelectedItem() + " 의 연결을 해제하시겠습니까?")){
     			thread.stopThread();
+    			thread.interrupt();
+
+    			String selectedItem = loginHisCombo.getSelectionModel().getSelectedItem();
+    			ControlCommon.getInstance().deleteCombo(loginHisCombo, selectedItem);
+    			
+    			DbCommon.close(DBConnection.getConnection());
+    			
+    			currLoginInfo = null;
+    			cnt = 0;
+    			startBtn.setText("start");
     		}
     	}else{
     		DialogCommon.alert("데이터베이스 연결이 되어있지 않습니다.");
@@ -270,35 +372,27 @@ public class MainController implements Initializable{
 	public void initChartData() {
 		// performence 항목
 		bufferCacheHitSeries = new XYChart.Series<String, Number>();
-		bufferCacheHitList = FXCollections
-				.observableArrayList(bufferCacheHitSeries);
+		bufferCacheHitList = FXCollections.observableArrayList(bufferCacheHitSeries);
 		libraryCacheHitSeries = new XYChart.Series<String, Number>();
-		libraryCacheHitList = FXCollections
-				.observableArrayList(libraryCacheHitSeries);
+		libraryCacheHitList = FXCollections.observableArrayList(libraryCacheHitSeries);
 		dictionaryCacheHitSeries = new XYChart.Series<String, Number>();
-		dictionaryCacheHitList = FXCollections
-				.observableArrayList(dictionaryCacheHitSeries);
+		dictionaryCacheHitList = FXCollections.observableArrayList(dictionaryCacheHitSeries);
 		inMemoryHitSeries = new XYChart.Series<String, Number>();
 		inMemoryHitList = FXCollections.observableArrayList(inMemoryHitSeries);
 
 		// wait event 항목
 		bufferBusyWaitSeries = new XYChart.Series<String, Number>();
-		bufferBusyWaitList = FXCollections
-				.observableArrayList(bufferBusyWaitSeries);
+		bufferBusyWaitList = FXCollections.observableArrayList(bufferBusyWaitSeries);
 		logFileSyncSeries = new XYChart.Series<String, Number>();
 		logFileSyncList = FXCollections.observableArrayList(logFileSyncSeries);
 		dbFileSequentialSeries = new XYChart.Series<String, Number>();
-		dbFileSequentialList = FXCollections
-				.observableArrayList(dbFileSequentialSeries);
+		dbFileSequentialList = FXCollections.observableArrayList(dbFileSequentialSeries);
 		dbFileScatteredSeries = new XYChart.Series<String, Number>();
-		dbFileScatteredList = FXCollections
-				.observableArrayList(dbFileScatteredSeries);
+		dbFileScatteredList = FXCollections.observableArrayList(dbFileScatteredSeries);
 		libraryCacheLockSeries = new XYChart.Series<String, Number>();
-		libraryCacheLockList = FXCollections
-				.observableArrayList(libraryCacheLockSeries);
+		libraryCacheLockList = FXCollections.observableArrayList(libraryCacheLockSeries);
 		logBufferSpaceSeries = new XYChart.Series<String, Number>();
-		logBufferSpaceList = FXCollections
-				.observableArrayList(logBufferSpaceSeries);
+		logBufferSpaceList = FXCollections.observableArrayList(logBufferSpaceSeries);
 
 		// TOP3 SQL 항목
 		bufferGetstSeries = new XYChart.Series<String, Number>();
@@ -394,6 +488,15 @@ public class MainController implements Initializable{
 		}*/
 	}
 	
+	/**
+	 * 
+	* 1. 메소드명 : barChartColorSetting
+	* 2. 작성일 : 2015. 8. 17. 오후 4:45:27
+	* 3. 작성자 : 길용현
+	* 4. 설명 : bar chart color 설정
+	* @param data
+	* @param color
+	 */
 	private void barChartColorSetting(XYChart.Data<String,Number> data, String color){
 		data.getNode().setStyle("-fx-bar-fill: "+color+";");
 	}
@@ -436,9 +539,10 @@ public class MainController implements Initializable{
 	    
 	    // TOP3 SQL 항목 chart data 추가
 	    ArrayList<TopSqlDto> topSqlList = RealtimeMonDao.getInstance().getTopSqlData();
+
 	    double bufferGetsValue1 = 0;
 	    double bufferGetsValue2 = 0;
-	    double bufferGetsValue3 = 0;
+	    double bufferGetsValue3 = 0;                   
 	    if(topSqlList.size() != 0){
 	    	bufferGetsValue1 = ((TopSqlDto)topSqlList.get(0)).getTop1();
 	    	bufferGetsValue2 = ((TopSqlDto)topSqlList.get(0)).getTop2();
@@ -536,6 +640,19 @@ public class MainController implements Initializable{
 	    	executionsSeries.getData().get(2).setYValue((Number)executionsValue3);
 	    }
 	    
+	    if(cnt>=30){
+	    	bufferCacheHitSeries.getData().remove(0);
+	        libraryCacheHitSeries.getData().remove(0);
+	        dictionaryCacheHitSeries.getData().remove(0);
+	        inMemoryHitSeries.getData().remove(0);
+	        bufferBusyWaitSeries.getData().remove(0);
+	        logFileSyncSeries.getData().remove(0);
+	        dbFileSequentialSeries.getData().remove(0);
+	        dbFileScatteredSeries.getData().remove(0);
+	        libraryCacheLockSeries.getData().remove(0);
+	        logBufferSpaceSeries.getData().remove(0);
+    	}
+	    
 	    // JDBC Connection data 추가
 	    HashMap<Integer, HashSet<String>> jdbcMap = RealtimeMonDao.getInstance().getJdbcConnectData();
 	    Set<Integer> set = jdbcMap.keySet();
@@ -570,23 +687,30 @@ public class MainController implements Initializable{
 	* 5. 설명 : chart 구현을 위한 Thread 클래스
 	 */
 	class MainThread extends Thread {
-		private boolean state = true;
+		private boolean stop ;
+		private boolean suspend ;
+		
+		public MainThread(){
+			stop = true;
+			suspend = true;
+		}
 		
 		public void run() {
-			cnt = 0;
-			while(state){
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						// chart initialize
-						if(cnt==0){
-							removeAllData();
-						}
+			while(stop){
+				if(suspend){
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							// chart initialize
+							if(cnt==0){
+								removeAllData();
+							}
 						
-						// chart data add
-						addData(cnt);
-					}
-				});
+							// chart data add
+							addData(cnt);
+						}
+					});
+				}
 				
 				try {
 					Thread.sleep(3000);
@@ -594,12 +718,22 @@ public class MainController implements Initializable{
 					break;
 				}
 				
-				cnt++;
+				if(suspend){
+					cnt++;
+				}
 			}
 		}
 		
 		public void stopThread(){
-			state = false;
+			stop = false;
+		}
+		
+		public void suspendThread(){
+			suspend = false;
+		}
+		
+		public void resumeThread(){
+			suspend = true;
 		}
 	}
 }

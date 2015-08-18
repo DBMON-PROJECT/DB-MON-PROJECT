@@ -102,4 +102,17 @@ public class ControlCommon {
 		comboBox.getItems().add(obj);
 		comboBox.setValue(obj);
 	}
+	
+	/**
+	 * 
+	* 1. 메소드명 : deleteCombo
+	* 2. 작성일 : 2015. 8. 17. 오후 9:54:26
+	* 3. 작성자 : 길용현
+	* 4. 설명 : ComboBox 데이터 삭제
+	* @param comboBox
+	* @param obj
+	 */
+	public void deleteCombo(ComboBox comboBox, Object obj){
+		comboBox.getItems().remove(obj);
+	}
 }

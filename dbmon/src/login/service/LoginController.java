@@ -56,7 +56,7 @@ public class LoginController implements Initializable{
     public Stage currentStage;
     public MainController mainController;
    
-    public ArrayList<LoginDto> tnsInfoList; // tnsNames 파일 안의 정보를 가지는 리스트
+    public static ArrayList<LoginDto> tnsInfoList; // tnsNames 파일 안의 정보를 가지는 리스트
     
     /**
      * 
@@ -135,6 +135,8 @@ public class LoginController implements Initializable{
         			break;
         		}
         	}
+        	
+        	mainController.currLoginInfo = logInfo.getUserName()+"@"+loginDto.getUserName();
         	
         	mainController.onlineUserList.put(logInfo, loginDto);
         	mainController.addLoginHistory(logInfo, loginDto);
