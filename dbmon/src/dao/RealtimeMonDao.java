@@ -1,4 +1,4 @@
-package main.dao;
+package dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,12 +9,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import main.dto.PerformenceDto;
-import main.dto.TopSqlDto;
-import main.dto.WaitEventDto;
-import sql.SqlList;
+import sql.RealtimeSQL;
 import db.DBConnection;
 import db.DbCommon;
+import dto.PerformenceDto;
+import dto.TopSqlDto;
+import dto.WaitEventDto;
 
 /**
  * 
@@ -57,7 +57,7 @@ public class RealtimeMonDao {
 		try{
 			Connection conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SqlList.performenceSql);
+			rs = stmt.executeQuery(RealtimeSQL.performenceSql);
 			
 			while(rs.next()){
 				PerformenceDto dto = new PerformenceDto();
@@ -91,7 +91,7 @@ public class RealtimeMonDao {
 		try{
 			Connection conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SqlList.waitEventSql);
+			rs = stmt.executeQuery(RealtimeSQL.waitEventSql);
 			
 			while(rs.next()){
 				WaitEventDto dto = new WaitEventDto();
@@ -125,7 +125,7 @@ public class RealtimeMonDao {
 		try{
 			Connection conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SqlList.topSql);
+			rs = stmt.executeQuery(RealtimeSQL.topSql);
 			
 			while(rs.next()){
 				TopSqlDto dto = new TopSqlDto();
@@ -185,7 +185,7 @@ public class RealtimeMonDao {
 			
 			Connection conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SqlList.jdbcConnectSql);
+			rs = stmt.executeQuery(RealtimeSQL.jdbcConnectSql);
 			
 			String paddr = "";
 			int time = cal.get(Calendar.HOUR_OF_DAY);
@@ -220,7 +220,7 @@ public class RealtimeMonDao {
 		try{
 			Connection conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SqlList.onlineUsersSql);
+			rs = stmt.executeQuery(RealtimeSQL.onlineUsersSql);
 			
 			while(rs.next()){
 				TopSqlDto dto = new TopSqlDto();

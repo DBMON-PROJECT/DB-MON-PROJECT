@@ -8,6 +8,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -114,5 +115,13 @@ public class ControlCommon {
 	 */
 	public void deleteCombo(ComboBox comboBox, Object obj){
 		comboBox.getItems().remove(obj);
+	}
+	
+	public void insertText(TextArea textarea,String str){
+		textarea.setText(str);
+	}
+	
+	public void insertText(TextArea textarea,StringBuffer sb){
+		textarea.setText(sb.toString());
 	}
 }

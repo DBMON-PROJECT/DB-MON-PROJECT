@@ -39,4 +39,47 @@ public class TableColumnCommon {
 		
 		return type;
 	}
+	
+	public String[] getSessionCheckColumn(){
+		String[] type = new String[6];
+		type[0] = "sqlId";
+		type[1] = "osUser";
+		type[2] = "logonTime";
+		type[3] = "paddr";
+		type[4] = "username";
+		type[5] = "type";
+		
+		return type;
+		
+	}
+	
+	public String[] getBindCheckColumn(){
+		String[] type = new String[6];
+		type[0]="sanpId";
+		type[1]="sqlId";
+		type[2]="name";
+		type[3]="position";
+		type[4]="datatypeString";
+		type[5]="lastCaptured";
+
+		return type;
+	}
+	
+	public String[] getTablespaceColumn(){
+		String[] type = new String[12];
+		type[0]="tablespace";
+		type[1]="totalMb";
+		type[2]="usedMb";
+		type[3]="freeMb";
+		type[4]="usedPer";
+		type[5]="freePer";
+		type[6]="maxMb";
+		type[7]="minMb";
+		type[8]="avgMb";
+		type[9]="distributePer";
+		type[10]="distState";
+		type[11]="fileCnt";
+		
+		return type;
+	}
 }

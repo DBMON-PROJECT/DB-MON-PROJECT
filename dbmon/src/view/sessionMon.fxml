@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="711.0" prefWidth="1080.0" spacing="5.0" style="-fx-background-color:#27293B;" stylesheets="@sessionMon.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
+   <children>
+      <VBox prefHeight="361.0" prefWidth="1080.0" spacing="5.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <HBox prefHeight="29.0" prefWidth="465.0">
+                     <children>
+                        <Button fx:id="sessionButton" mnemonicParsing="false" onAction="#sessionSearchHandle" text="Search" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="29.0" prefWidth="691.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="148.0" text="이 표는 샘플입니다." textFill="WHITE">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <TableView fx:id="sessionTable" prefHeight="393.0" prefWidth="1080.0" style="-fx-border-color: #ffffff;">
+              <columns>
+                <TableColumn prefWidth="75.0" text="SQL_ID" />
+                <TableColumn prefWidth="75.0" text="OSuser" />
+                  <TableColumn fx:id="logonCol" prefWidth="75.0" text="LogonTime" />
+                  <TableColumn prefWidth="75.0" text="Paddr" />
+                  <TableColumn prefWidth="75.0" text="UserName" />
+                  <TableColumn prefWidth="75.0" text="TYPE" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </children>
+      </VBox>
+      <HBox prefHeight="29.0" prefWidth="691.0">
+         <children>
+            <HBox prefHeight="21.0" prefWidth="569.0">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="300.0" text="이 표는 샘플입니다." textFill="WHITE">
+                     <font>
+                        <Font size="27.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="211.0" text="이 표는 샘플입니다." textFill="WHITE">
+               <font>
+                  <Font size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox prefHeight="356.0" prefWidth="288.0" spacing="5.0">
+         <children>
+            <VBox prefHeight="353.0" prefWidth="280.0">
+               <children>
+                  <TableView fx:id="bindTable" prefHeight="338.0" prefWidth="203.0" style="-fx-border-color: #ffffff;">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="SnapId" />
+                      <TableColumn prefWidth="75.0" text="SQL_ID" />
+                        <TableColumn prefWidth="75.0" text="NAME" />
+                        <TableColumn prefWidth="75.0" text="Position" />
+                        <TableColumn prefWidth="75.0" text="DataType" />
+                        <TableColumn prefWidth="75.0" text="Last_capured" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="353.0" prefWidth="817.0" spacing="5.0">
+               <children>
+                  <TextArea fx:id="fulltext" layoutX="10.0" layoutY="122.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #ffffff;" />
+                  <HBox alignment="CENTER" prefHeight="29.0" prefWidth="691.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="148.0" text="이 표는 샘플입니다." textFill="WHITE">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="plantext" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #ffffff;" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

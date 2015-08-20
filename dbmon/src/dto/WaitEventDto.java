@@ -1,4 +1,4 @@
-package main.dto;
+package dto;
 /**
  * 
 * 1. 패키지명 : main.dto

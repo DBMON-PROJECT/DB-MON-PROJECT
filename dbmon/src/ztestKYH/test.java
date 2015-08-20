@@ -8,43 +8,25 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 
 public class test {
+	
+	private static XYChart.Series<String, Number> Series; 
+	private static ObservableList list;
+	
 	public static void main(String[] args) {
-		XYChart.Series<String, Number> Series = new XYChart.Series<String, Number>(); 
-		ObservableList list = FXCollections.observableArrayList(Series);
+		ArrayList<XYChart.Series<String, Number>> arraylist;
+		arraylist = new ArrayList<XYChart.Series<String,Number>>();
 		
-		//System.out.println(list.toString());
-		System.out.println(Series.getData().toString());
-		System.out.println(Series.getData().size());
-		System.out.println();
-		//System.out.println(list.size());
+		arraylist.add(Series);
 		
-		Series.getData().add(new XYChart.Data<String,Number>("1", (Number)1));
-		Series.getData().add(new XYChart.Data<String,Number>("2", (Number)2));
-		Series.getData().add(new XYChart.Data<String,Number>("3", (Number)3));
+		setting(arraylist);
 		
-		//System.out.println(list.toString());
-		System.out.println(Series.getData().toString());
-		System.out.println(Series.getData().size());
-		System.out.println();
-		//System.out.println(list.size());
-		
-		Series.getData().clear();
-		
-		//System.out.println(list.toString());
-		System.out.println(Series.getData().toString());
-		System.out.println(Series.getData().size());
-		System.out.println();
-//		System.out.println(list.size());
-		
-		Series.getData().add(new XYChart.Data<String,Number>("4", (Number)1));
-		Series.getData().add(new XYChart.Data<String,Number>("5", (Number)2));
-//		Series.getData().add(new XYChart.Data<String,Number>("6", (Number)3));
-		
-		//System.out.println(list.toString());
-		System.out.println(Series.getData().toString());
-		System.out.println(Series.getData().size());
-		System.out.println(Series.getData().get(Series.getData().size()-1));
-		System.out.println();
-//		System.out.println(list.size());
+		System.out.println(Series);
+		System.out.println(arraylist.get(0));
+	}
+	
+	private static void setting(ArrayList<XYChart.Series<String, Number>> arraylist){
+		XYChart.Series<String, Number> t = arraylist.get(0);
+		t = new XYChart.Series<String, Number>();
+		arraylist.set(0, t);
 	}
 }

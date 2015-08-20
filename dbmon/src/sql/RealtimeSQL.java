@@ -1,6 +1,6 @@
 package sql;
 
-public class SqlList {
+public class RealtimeSQL {
 	public static String performenceSql = "SELECT 'BufferCacheHitRatio' TYPE, "+
 		       "TRUNC((P1.VALUE+P2.VALUE-P3.VALUE)/(P1.VALUE+P2.VALUE)*100, 2) RATIO "+
 		       "FROM V$SYSSTAT P1, "+

@@ -1,4 +1,4 @@
-package login.service;
+package controller;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import service.LoginService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -22,14 +23,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import login.dto.LoginDto;
-import login.dto.LoginLogDto;
-import main.service.MainController;
-
 import common.ControlCommon;
 import common.TableColumnCommon;
-
 import db.DBConnection;
+import dto.LoginDto;
+import dto.LoginLogDto;
 
 /**
  * 

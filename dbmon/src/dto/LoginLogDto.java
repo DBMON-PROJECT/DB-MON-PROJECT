@@ -1,4 +1,4 @@
-package login.dto;
+package dto;
 
 /**
  * 

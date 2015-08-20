@@ -1,4 +1,4 @@
-package login.service;
+package service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -18,8 +18,8 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import login.dto.LoginDto;
-import login.dto.LoginLogDto;
+import dto.LoginDto;
+import dto.LoginLogDto;
 
 /**
  * 

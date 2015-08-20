@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 
 public class Test_Controller implements Initializable{
 	@FXML
-    private Button changeBtn;
+    private static Button changeBtn;
 	@FXML
     private CategoryAxis categoryAxis;
     @FXML
@@ -35,6 +35,8 @@ public class Test_Controller implements Initializable{
 		Series.getData().add(new XYChart.Data<String,Number>("2", (Number)2));
 		
 		System.out.println(Series.getNode().getStyle());*/
+    	System.out.println(1);
+    	changeBtn.setText("1");
     }
 
 	@Override

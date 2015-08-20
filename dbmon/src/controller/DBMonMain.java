@@ -1,9 +1,11 @@
-package main.service;
+package controller;
+
+import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -16,7 +18,7 @@ import javafx.stage.Stage;
  */
 public class DBMonMain extends Application{
 	public static Stage mainStage;
-
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -24,10 +26,10 @@ public class DBMonMain extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		mainStage = primaryStage;
+		Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
+		Scene scene = new Scene(root);
 		
-		VBox root = FXMLLoader.load(getClass().getResource("/main/main.fxml"));
-		
-		primaryStage.setScene(new Scene(root));
+		primaryStage.setScene(scene);
 		primaryStage.setTitle("메인 화면");
 		primaryStage.show();
 	}
