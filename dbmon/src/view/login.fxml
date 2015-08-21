@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane fx:id="loginAnchorpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="530.0" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
       <HBox layoutX="195.0" layoutY="100.0" prefHeight="353.0" prefWidth="530.0" spacing="10.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -43,10 +43,10 @@
                         <PasswordField fx:id="pwdTxt" onAction="#Connect" />
                      </children>
                   </VBox>
-                  <CheckBox fx:id="CheckCase" mnemonicParsing="false" prefHeight="16.0" prefWidth="125.0" text="Save Password" />
-                  <ImageView fitHeight="130.0" fitWidth="160.0" pickOnBounds="true">
+                  <CheckBox fx:id="CheckCase" mnemonicParsing="false" prefHeight="16.0" prefWidth="125.0" selected="true" text="Save Password" />
+                  <ImageView fitHeight="114.0" fitWidth="179.0" pickOnBounds="true">
                      <image>
-                        <Image url="@../../../수업자료/이미지모음/you_can_do_it2.jpg" />
+                        <Image url="@../image/logo.gif" />
                      </image>
                   </ImageView>
                </children>

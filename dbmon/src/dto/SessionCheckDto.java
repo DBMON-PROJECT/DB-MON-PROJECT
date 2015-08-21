@@ -2,6 +2,14 @@ package dto;
 
 import java.util.Date;
 
+/**
+ * 
+* 1. 패키지명 : dto
+* 2. 타입명 : SessionCheckDto.java
+* 3. 작성일 : 2015. 8. 21. 오후 2:22:18
+* 4. 작성자 : 정석준
+* 5. 설명 : session 관련 Dto 클래스
+ */
 public class SessionCheckDto {
 	private String sqlId;
 	private String osUser;
@@ -10,12 +18,6 @@ public class SessionCheckDto {
 	private String username;
 	private String type;
 	
-	@Override
-	public String toString() {
-		return "SessionCheckDto [sqlId=" + sqlId + ", osUser=" + osUser
-				+ ", logonTime=" + logonTime + ", paddr=" + paddr
-				+ ", username=" + username + ", type=" + type + "]";
-	}
 	public String getSqlId() {
 		return sqlId;
 	}
@@ -51,5 +53,12 @@ public class SessionCheckDto {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	@Override
+	public String toString() {
+		return "SessionCheckDto [sqlId=" + sqlId + ", osUser=" + osUser
+				+ ", logonTime=" + logonTime + ", paddr=" + paddr
+				+ ", username=" + username + ", type=" + type + "]";
 	}
 }

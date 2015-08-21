@@ -53,9 +53,9 @@ public class LoginService {
 	* @return
 	 */
 	public String readRegistry(){
-		/*try {
+		try {
 			Process process = Runtime.getRuntime().exec(
-					"reg query HKLM\\Software\\oracle\\key_xe /v oracle_home");
+					"reg query HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\ORACLE\\KEY_OraDb11g_home1 /v oracle_home");
 
 			StreamReader reader = new StreamReader(process.getInputStream());
 			reader.start();
@@ -67,8 +67,7 @@ public class LoginService {
 			return output.substring(output.indexOf("REG_SZ") + 6).trim();
 		} catch (Exception e) {
 			return null;
-		}*/
-		return "C:\\app\\kyh\\product\\11.2.0\\dbhome_1";
+		}
 	}
 	
 	/**
@@ -99,11 +98,6 @@ public class LoginService {
 		}catch(Exception cnfe){
 			cnfe.printStackTrace();
 		}
-
-		/*String pattern = 
-		"([A-z,a-z, ]*)(=\r\n)(.*)([[ ]*[(][A-z,a-z]*=\r\n]*)(.*)(HOST[ ]?=)(.*)"
-		+ "([)][(])(PORT[ ]?=)(.*)([)][)])([[ ]*[(][A-z,a-z]*=[.*,[)]]?\r\n]*)([(]SERVICE_NAME\\s*=)(\\w*)[)](.*)";
-		*/
 		
 		String pattern = "(\\w+)(\\s*=\\s*\r\n)"+
                 "(\\s*[(]\\s*DESCRIPTION\\s*=\\s*\r\n)"+

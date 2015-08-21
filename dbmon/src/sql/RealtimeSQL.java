@@ -1,5 +1,13 @@
 package sql;
 
+/**
+ * 
+* 1. 패키지명 : sql
+* 2. 타입명 : RealtimeSQL.java
+* 3. 작성일 : 2015. 8. 21. 오후 2:25:30
+* 4. 작성자 : 길용현
+* 5. 설명 : Realtime Monitoring 관련 SQL 목록
+ */
 public class RealtimeSQL {
 	public static String performenceSql = "SELECT 'BufferCacheHitRatio' TYPE, "+
 		       "TRUNC((P1.VALUE+P2.VALUE-P3.VALUE)/(P1.VALUE+P2.VALUE)*100, 2) RATIO "+

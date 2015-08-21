@@ -1,0 +1,175 @@
+#MainVBox {
+   -fx-background-color: #27293B;
+}
+#MainHBox {
+   -fx-background-color: #27293B;
+}
+#onlineUsersLabel {
+   -fx-border-color: #ffffff;
+}
+
+.combo-box{
+    -fx-background-color: #B5B5B5;
+}
+
+.menu-bar{
+    -fx-background-color: #3D3F52;
+    
+}
+
+.menu-bar .label {
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #dedede;
+    -fx-background-color: #3D3F52
+}
+
+.menu-bar > .container {
+   -fx-text-fill: red;
+}
+
+    
+.button {
+    -fx-padding: 5.0 22.0 5.0 22.0;   
+    -fx-border-color: #e2e2e2;
+    -fx-border-width: 2.0;
+    -fx-background-color: transparent;
+    -fx-font-family: Segoe UI, Helvetica, Arial, "sans-serif";
+    -fx-font-size: 10pt;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 1.0, 2.0;
+    -fx-background-radius: 16px;
+    -fx-border-radius: 100px;
+}
+
+.button:hover{
+   -fx-background-color: #5B5D84;
+}
+
+.button .button:selected
+{
+   fx-background-color: #27293B;
+}
+
+.button:focused {
+    -fx-background-color: #27293B;
+}
+
+.chart-plot-background{
+	-fx-background-color: #27293B;
+}
+
+.chart-title {
+  -fx-text-fill: #ffffff;
+  -fx-font-size: 1.2em;
+}
+
+
+.chart{
+   -fx-background-color: #27293B;
+   -fx-border-color: #ffffff;
+      
+}
+
+.toggle-button {
+  -fx-graphic: url("../service/KakaoTalk_20150820_093404963.jpg");
+}
+
+
+
+.tool-bar{
+    -fx-background-color: #1E1F2F;
+}
+
+
+
+.titled-pane {
+   -fx-text-fill: #C8C8C8;
+}
+
+.titled-pane > .title {
+   -fx-background-color: #27293B;
+}
+
+
+.tab-pane .tab:selected
+{
+   -fx-background-color: #27293B;
+   -fx-background-size: 1.9em;
+   -fx-text-fill: #27293B;
+}
+
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #27293B;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-color: #C8C8C8;
+}
+
+.tab:selected .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: #C8C8C8;
+    -fx-background-color: #27293B;
+}
+
+.tab:top {
+   -fx-background-color: #C8C8C8;
+}
+
+.chart {
+    -fx-padding: 2px;
+}
+
+.chart-title > .title > .text{
+   -fx-text-fill: #1EFF2F;
+}
+
+.chart-title {
+  -fx-text-fill: #B0B0B0;
+  -fx-font-size: 1.3em;
+}
+
+
+.chart-content {
+    -fx-padding: 10px;
+}
+
+
+.axis-tick-mark {
+    -fx-stroke: #1EFF2F;
+    -fx-tick-label-fill: #1EFF2F;
+}
+.axis-minor-tick-mark {
+    -fx-stroke: #1EFF2F;
+    -fx-fill: #1EFF2F;
+    -fx-tick-label-fill: #1EFF2F;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #1EFF2F;
+    -fx-tick-label-fill: #1EFF2F;
+    -fx-border-color: #1EFF2F;
+}
+
+.axis{
+   -fx-tick-label-fill: #B62828;   
+}
+
+.axis:left {
+  
+    
+}
+.axis:bottom {
+}
+
+
+
+.tab-header-background {
+   -fx-background-color: #3D3F52;
+}
+
+.label {
+   -fx-background-color: #27293B;
+   -fx-border-width: 0.0001;
+   -fx-text-fill: white;
+}

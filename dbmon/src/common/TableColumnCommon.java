@@ -40,19 +40,35 @@ public class TableColumnCommon {
 		return type;
 	}
 	
+	/**
+	 * 
+	* 1. 메소드명 : getSessionCheckColumn
+	* 2. 작성일 : 2015. 8. 21. 오후 1:45:02
+	* 3. 작성자 : 정석준
+	* 4. 설명 : sessionTable 관련 컬럼 정보
+	* @return
+	 */
 	public String[] getSessionCheckColumn(){
 		String[] type = new String[6];
-		type[0] = "sqlId";
+		type[0] = "paddr";
 		type[1] = "osUser";
-		type[2] = "logonTime";
-		type[3] = "paddr";
-		type[4] = "username";
-		type[5] = "type";
+		type[2] = "sqlId";
+		type[3] = "username";
+		type[4] = "type";
+		type[5] = "logonTime";
 		
 		return type;
 		
 	}
 	
+	/**
+	 * 
+	* 1. 메소드명 : getBindCheckColumn
+	* 2. 작성일 : 2015. 8. 21. 오후 1:45:27
+	* 3. 작성자 : 정석준
+	* 4. 설명 : bindTable 관련 컴럼 정보
+	* @return
+	 */
 	public String[] getBindCheckColumn(){
 		String[] type = new String[6];
 		type[0]="sanpId";
@@ -65,6 +81,14 @@ public class TableColumnCommon {
 		return type;
 	}
 	
+	/**
+	 * 
+	* 1. 메소드명 : getTablespaceColumn
+	* 2. 작성일 : 2015. 8. 21. 오후 1:45:56
+	* 3. 작성자 : 
+	* 4. 설명 : tablespaceTable 관련 컬럼 정보
+	* @return
+	 */
 	public String[] getTablespaceColumn(){
 		String[] type = new String[12];
 		type[0]="tablespace";

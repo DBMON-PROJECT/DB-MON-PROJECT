@@ -1,101 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<VBox prefHeight="711.0" prefWidth="1080.0" spacing="5.0" style="-fx-background-color:#27293B;" stylesheets="@sessionMon.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" spacing="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SessionController">
    <children>
-      <VBox prefHeight="361.0" prefWidth="1080.0" spacing="5.0">
+      <VBox prefHeight="395.0" prefWidth="100.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <HBox prefHeight="29.0" prefWidth="465.0">
+            <TitledPane contentDisplay="RIGHT" graphicTextGap="1087.0" prefHeight="400.0" prefWidth="200.0" text="Session Information">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="sessionButton" mnemonicParsing="false" onAction="#sessionSearchHandle" text="Search" />
+                        <TableView fx:id="sessionTable" prefHeight="377.0" prefWidth="1288.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="PADDR" />
+                            <TableColumn prefWidth="75.0" text="OS USER" />
+                              <TableColumn prefWidth="75.0" text="SQL ID" />
+                              <TableColumn prefWidth="75.0" text="USER NAME" />
+                              <TableColumn prefWidth="75.0" text="TYPE" />
+                              <TableColumn fx:id="logonCol" prefWidth="75.0" text="LOGON TIME" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
                      </children>
-                  </HBox>
-                  <HBox prefHeight="29.0" prefWidth="691.0">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="148.0" text="이 표는 샘플입니다." textFill="WHITE">
-                           <font>
-                              <Font size="27.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-            </HBox>
-            <TableView fx:id="sessionTable" prefHeight="393.0" prefWidth="1080.0" style="-fx-border-color: #ffffff;">
-              <columns>
-                <TableColumn prefWidth="75.0" text="SQL_ID" />
-                <TableColumn prefWidth="75.0" text="OSuser" />
-                  <TableColumn fx:id="logonCol" prefWidth="75.0" text="LogonTime" />
-                  <TableColumn prefWidth="75.0" text="Paddr" />
-                  <TableColumn prefWidth="75.0" text="UserName" />
-                  <TableColumn prefWidth="75.0" text="TYPE" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </content>
+               <graphic>
+                  <Button fx:id="sessionButton" mnemonicParsing="false" onAction="#sessionSearchHandle" text="Search" />
+               </graphic>
+            </TitledPane>
          </children>
       </VBox>
-      <HBox prefHeight="29.0" prefWidth="691.0">
+      <HBox prefHeight="395.0" prefWidth="200.0" spacing="5.0">
          <children>
-            <HBox prefHeight="21.0" prefWidth="569.0">
-               <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="300.0" text="이 표는 샘플입니다." textFill="WHITE">
-                     <font>
-                        <Font size="27.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="211.0" text="이 표는 샘플입니다." textFill="WHITE">
-               <font>
-                  <Font size="27.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox prefHeight="356.0" prefWidth="288.0" spacing="5.0">
-         <children>
-            <VBox prefHeight="353.0" prefWidth="280.0">
-               <children>
-                  <TableView fx:id="bindTable" prefHeight="338.0" prefWidth="203.0" style="-fx-border-color: #ffffff;">
-                    <columns>
-                      <TableColumn prefWidth="75.0" text="SnapId" />
-                      <TableColumn prefWidth="75.0" text="SQL_ID" />
-                        <TableColumn prefWidth="75.0" text="NAME" />
-                        <TableColumn prefWidth="75.0" text="Position" />
-                        <TableColumn prefWidth="75.0" text="DataType" />
-                        <TableColumn prefWidth="75.0" text="Last_capured" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-               </children>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="353.0" prefWidth="817.0" spacing="5.0">
-               <children>
-                  <TextArea fx:id="fulltext" layoutX="10.0" layoutY="122.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #ffffff;" />
-                  <HBox alignment="CENTER" prefHeight="29.0" prefWidth="691.0">
+            <TitledPane prefHeight="400.0" prefWidth="650.0" text="Bind Variable">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="148.0" text="이 표는 샘플입니다." textFill="WHITE">
-                           <font>
-                              <Font size="27.0" />
-                           </font>
-                        </Label>
+                        <TableView fx:id="bindTable" prefHeight="370.0" prefWidth="631.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="SNAP ID" />
+                            <TableColumn prefWidth="75.0" text="SQL ID" />
+                              <TableColumn prefWidth="75.0" text="NAME" />
+                              <TableColumn prefWidth="75.0" text="POSITION" />
+                              <TableColumn prefWidth="75.0" text="DATA TYPE" />
+                              <TableColumn prefWidth="75.0" text="LAST CAPTURED" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
                      </children>
-                  </HBox>
-                  <TextArea fx:id="plantext" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: #ffffff;" />
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </TitledPane>
+            <VBox prefHeight="200.0" prefWidth="650.0" spacing="4.0">
+               <children>
+                  <TitledPane prefHeight="199.0" prefWidth="200.0" text="SQL Text">
+                     <content>
+                        <TextArea fx:id="fulltext" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
+                     </content>
+                  </TitledPane>
+                  <TitledPane prefHeight="199.0" prefWidth="200.0" text="Plan Text">
+                     <content>
+                        <TextArea fx:id="plantext" prefHeight="200.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
                </children>
             </VBox>
          </children>
       </HBox>
    </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
 </VBox>

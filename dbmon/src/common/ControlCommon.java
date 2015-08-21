@@ -85,9 +85,9 @@ public class ControlCommon {
 	public void insertCombo(ComboBox comboBox, List list){
 		ObservableList dataList = FXCollections.observableArrayList(list);
 		comboBox.setItems(dataList);
-		if(list.size() != 0){
+		/*if(list.size() != 0){
 			comboBox.setValue(list.get(0));
-		}
+		}*/
 	}
 	
 	/**
@@ -116,12 +116,17 @@ public class ControlCommon {
 	public void deleteCombo(ComboBox comboBox, Object obj){
 		comboBox.getItems().remove(obj);
 	}
-	
-	public void insertText(TextArea textarea,String str){
-		textarea.setText(str);
-	}
-	
-	public void insertText(TextArea textarea,StringBuffer sb){
+
+	/**
+	 * 
+	* 1. 메소드명 : insertText
+	* 2. 작성일 : 2015. 8. 21. 오후 1:43:56
+	* 3. 작성자 : 정석준
+	* 4. 설명 : Textarea 전체 데이터 삽입
+	* @param textarea
+	* @param sb
+	 */
+	public void insertText(TextArea textarea, StringBuffer sb){
 		textarea.setText(sb.toString());
 	}
 }

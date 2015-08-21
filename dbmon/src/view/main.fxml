@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.geometry.*?>
@@ -8,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="874.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="890.0" prefWidth="1300.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <HBox prefHeight="30.0" prefWidth="1300.0">
          <children>
@@ -16,7 +18,15 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeMenuHandle" text="Close" />
+                        <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveMenuHandle" text="Save">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                    <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeMenuHandle" text="Close">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="X" control="ANY" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -41,11 +51,17 @@
                 <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginHandle" text="connect" />
                   <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeHandle" text="disconnect" />
                   <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startHandle" text="start" />
+                  <HBox prefHeight="30.0" prefWidth="555.0" />
+                  <ImageView fitHeight="29.0" fitWidth="251.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 2; -fx-scale-y: 1.3;">
+                  	 <image>
+                  	 <Image url="@../image/KakaoTalk_20150821_192843307.gif" />
+                     </image>
+                  </ImageView>
               </items>
             </ToolBar>
          </children>
       </HBox>
-      <TabPane fx:id="tabPane">
+      <TabPane fx:id="tabPane" style="-fx-background-color: #27293B;">
          <tabs>
             <Tab fx:id="realtimeTab" closable="false" text="Realtime Monitoring">
                <content>

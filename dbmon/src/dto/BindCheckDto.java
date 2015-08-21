@@ -2,6 +2,14 @@ package dto;
 
 import java.sql.Date;
 
+/**
+ * 
+* 1. 패키지명 : dto
+* 2. 타입명 : BindCheckDto.java
+* 3. 작성일 : 2015. 8. 21. 오후 2:23:54
+* 4. 작성자 : 정석준
+* 5. 설명 : bind variable 관련 Dto 클래스
+ */
 public class BindCheckDto {
 	private String sanpId;
 	private String sqlId;
@@ -21,14 +29,6 @@ public class BindCheckDto {
 		this.name = name;
 		this.position = position;
 		this.datatypeString = datatypeString;
-	}
-
-	@Override
-	public String toString() {
-		return "BindCheckDto [sanpId=" + sanpId + ", sqlId=" + sqlId
-				+ ", name=" + name + ", position=" + position
-				+ ", datatypeString=" + datatypeString + ", lastCaptured="
-				+ lastCaptured + "]";
 	}
 	
 	public String getSanpId() {
@@ -66,5 +66,13 @@ public class BindCheckDto {
 	}
 	public void setLastCaptured(Date lastCaptured) {
 		this.lastCaptured = lastCaptured;
+	}
+	
+	@Override
+	public String toString() {
+		return "BindCheckDto [sanpId=" + sanpId + ", sqlId=" + sqlId
+				+ ", name=" + name + ", position=" + position
+				+ ", datatypeString=" + datatypeString + ", lastCaptured="
+				+ lastCaptured + "]";
 	}
 }

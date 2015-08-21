@@ -8,13 +8,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import sql.SessionSQL;
+
+import common.ConstantCommon;
+
 import controller.SessionController;
 import db.DBConnection;
 import dto.BindCheckDto;
-import dto.PlanCheckDto;
 import dto.SessionCheckDto;
 
-
+/**
+ * 
+* 1. 패키지명 : dao
+* 2. 타입명 : SessionMonDao.java
+* 3. 작성일 : 2015. 8. 21. 오후 1:50:45
+* 4. 작성자 : 정석준
+* 5. 설명 : Session Monitoring Tab DB 관련 클래스
+ */
 public class SessionMonDao {
 	private SessionController sessioncontroller;
 	private static SessionMonDao instance;
@@ -31,8 +40,15 @@ public class SessionMonDao {
 		return instance;
 	}
 	
-	public ArrayList<SessionCheckDto> getSessionCheckSqlData()
-			throws ClassNotFoundException {
+	/**
+	 * 
+	* 1. 메소드명 : getSessionCheckSqlData
+	* 2. 작성일 : 2015. 8. 21. 오후 1:51:28
+	* 3. 작성자 : 정석준
+	* 4. 설명 : session information 항목의 데이터를 추출
+	* @return
+	 */
+	public ArrayList<SessionCheckDto> getSessionCheckSqlData(){
 		ArrayList<SessionCheckDto> list = new ArrayList<SessionCheckDto>();
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -50,7 +66,6 @@ public class SessionMonDao {
 				dto.setPaddr(rs.getString("paddr"));
 				dto.setUsername(rs.getString("username"));
 				dto.setType(rs.getString("type"));
-				System.out.println(dto.getLogonTime());
 				list.add(dto);
 			}
 
@@ -61,8 +76,16 @@ public class SessionMonDao {
 		return list;
 	}
 
-	public ArrayList<BindCheckDto> getBindCheckSqlData(String str)
-			throws Exception {
+	/**
+	 * 
+	* 1. 메소드명 : getBindCheckSqlData
+	* 2. 작성일 : 2015. 8. 21. 오후 1:52:48
+	* 3. 작성자 : 정석준
+	* 4. 설명 : bind variable 항목의 데이터를 추출
+	* @param str
+	* @return
+	 */
+	public ArrayList<BindCheckDto> getBindCheckSqlData(String sqlId){
 		ArrayList<BindCheckDto> list = new ArrayList<BindCheckDto>();
 
 		ResultSet rs = null;
@@ -71,7 +94,7 @@ public class SessionMonDao {
 		try {
 			Connection conn = DBConnection.getConnection();
 			ps = conn.prepareStatement(SessionSQL.bindCheck);
-			ps.setString(1, str);
+			ps.setString(1, sqlId);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -82,63 +105,72 @@ public class SessionMonDao {
 				dto.setPosition(rs.getString("position"));
 				dto.setDatatypeString(rs.getString("datatypeString"));
 				dto.setLastCaptured(rs.getDate("lastCaptured"));
-
 				list.add(dto);
-
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return list;
-
 	}
 		
-	public String getTextCheckSqlData(String str) throws Exception {
+	/**
+	 * 
+	* 1. 메소드명 : getTextCheckSqlData
+	* 2. 작성일 : 2015. 8. 21. 오후 1:53:59
+	* 3. 작성자 : 정석준
+	* 4. 설명 : sql full text 항목의 데이터를 추출
+	* @param str
+	* @return
+	 */
+	public void getTextCheckSqlData(String sqlId){
 		String text = null;
-
+		
 		ResultSet rs = null;
 		PreparedStatement ps = null;
 
 		try {
 			Connection conn = DBConnection.getConnection();
 			ps = conn.prepareStatement(SessionSQL.textcheck);
-			ps.setString(1, str);
+			ps.setString(1, sqlId);
 			rs = ps.executeQuery();
-
+			
+			ConstantCommon.sqlFullText = new StringBuffer();
+			
 			while (rs.next()) {
-
-				text = rs.getString("SQL_FULLTEXT");
+				ConstantCommon.sqlFullText.append(rs.getString("SQL_FULLTEXT"));
 			}
-
+			System.out.println(ConstantCommon.sqlFullText.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return text;
 	}
 
-	public StringBuffer getPlanCheckSqlData(String str) throws Exception {
-
-		StringBuffer sb = new StringBuffer();
-
+	/**
+	 * 
+	* 1. 메소드명 : getPlanCheckSqlData
+	* 2. 작성일 : 2015. 8. 21. 오후 1:58:32
+	* 3. 작성자 : 정석준
+	* 4. 설명 : plan text 항목의 데이터를 추출
+	* @param str
+	 */
+	public void getPlanCheckSqlData(String sqlId){
 		ResultSet rs = null;
 		PreparedStatement ps = null;
+		
+		try {
+			Connection conn = DBConnection.getConnection();
+			ps = conn.prepareStatement(SessionSQL.plancheck);
+			ps.setString(1, sqlId);
+			rs = ps.executeQuery();
 
-		Connection conn = DBConnection.getConnection();
-		ps = conn.prepareStatement(SessionSQL.plancheck);
-		ps.setString(1, str);
-		rs = ps.executeQuery();
+			ConstantCommon.planText = new StringBuffer();
 
-		while (rs.next()) {
-			PlanCheckDto dto = new PlanCheckDto();
-			dto.setPlanTableOutPut(rs.getString("planTableOutPut"));
-
-			sb.append(dto + "\r\n");
-
+			while (rs.next()) {
+				ConstantCommon.planText.append(rs.getString("planTableOutPut")+ "\r\n");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-
-		return sb;
 	}	
 }

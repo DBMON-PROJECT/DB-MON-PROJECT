@@ -1,5 +1,13 @@
 package sql;
 
+/**
+ * 
+* 1. 패키지명 : sql
+* 2. 타입명 : SchemaSQL.java
+* 3. 작성일 : 2015. 8. 21. 오후 2:25:51
+* 4. 작성자 : 조성일
+* 5. 설명 : schema monitoring 관련 SQL 목록
+ */
 public class SchemaSQL {
 	/**
 	 * 오브젝트 별 사용량 비율 비교

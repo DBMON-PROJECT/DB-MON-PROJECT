@@ -1,24 +1,26 @@
 package sql;
 
+/**
+ * 
+* 1. 패키지명 : sql
+* 2. 타입명 : SessionSQL.java
+* 3. 작성일 : 2015. 8. 21. 오후 2:25:06
+* 4. 작성자 : 정석준
+* 5. 설명 : Session Monitoring 관련 SQL 목록
+ */
 public class SessionSQL {
-		public static String sessionCheck=  "SELECT B.SQL_ID \"sqlId\" , "
-		         +"A.OSUSER \"osuser\", "
-		         +"A.LOGON_TIME \"logonTime\", "
-		         +"A.PADDR \"paddr\", "
-		         +"A.USERNAME \"userName\", "
-		         +"A.TYPE \"type\" "                      
-		         +"FROM V$SESSION A , "
-		         +"(SELECT DISTINCT NVL(SQL_ID, PREV_SQL_ID) SQL_ID "
-		                    +"FROM V$SESSION "
-		                    +"WHERE USERNAME IS NOT NULL "
-		                    +"AND USERNAME NOT IN ('SYSMAN','DBSNMP'))B " 
-		         +"WHERE A.SQL_ID = B.SQL_ID ";
+	public static String sessionCheck = "SELECT B.SQL_ID \"sqlId\" , "
+			+ "A.OSUSER \"osuser\", " + "A.LOGON_TIME \"logonTime\", "
+			+ "A.PADDR \"paddr\", " + "A.USERNAME \"userName\", "
+			+ "A.TYPE \"type\" " + "FROM V$SESSION A , "
+			+ "(SELECT DISTINCT NVL(SQL_ID, PREV_SQL_ID) SQL_ID "
+			+ "FROM V$SESSION " + "WHERE USERNAME IS NOT NULL "
+			+ "AND USERNAME NOT IN ('SYSMAN','DBSNMP'))B "
+			+ "WHERE A.SQL_ID = B.SQL_ID ";
+
 	
-	
-	
-	
-	public static String bindCheck ="SELECT A.SNAP_ID  \"sanpId\" , "                  
-		       +"A.SQL_ID \"sqlId\" , "                   
+	public static String bindCheck = "SELECT A.SNAP_ID  \"sanpId\" , "
+			+ "A.SQL_ID \"sqlId\" , "                   
 		       +"A.NAME \"name\" , "                     
 		       +"A.POSITION \"position\" , "                 
 		       +"A.DATATYPE_STRING \"datatypeString\" , "          

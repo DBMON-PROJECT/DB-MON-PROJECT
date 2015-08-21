@@ -1,11 +1,18 @@
 package controller;
 
+import java.awt.AWTException;
+import java.awt.HeadlessException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +27,15 @@ import javafx.scene.control.TabPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import javax.imageio.ImageIO;
+
 import service.MainThreadService;
+
 import common.ConstantCommon;
 import common.ControlCommon;
 import common.DialogCommon;
+
 import db.DBConnection;
 import db.DbCommon;
 import dto.LoginDto;
@@ -213,6 +225,43 @@ public class MainController implements Initializable{
     		DialogCommon.alert("데이터베이스 연결이 되어있지 않습니다.");
     	}
     }
+    
+    /**
+     * 
+    * 1. 메소드명 : saveMenuHandle
+    * 2. 작성일 : 2015. 8. 21. 오후 4:57:01
+    * 3. 작성자 : 길용현
+    * 4. 설명 : 현재 화면 screenshot 기능
+    * @param event
+     */
+    @FXML
+    void saveMenuHandle(ActionEvent event) {
+    	int x = (int)DBMonMain.mainStage.getX();
+    	int y = (int)DBMonMain.mainStage.getY();
+    	int width = (int)DBMonMain.mainStage.getWidth();
+    	int height = (int)DBMonMain.mainStage.getHeight();
+    	
+    	try{   
+			BufferedImage screencapture = new Robot().createScreenCapture(new Rectangle(x, y, width, height));
+
+			Calendar c = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+			
+			String path = MainController.class.getResource(".").getPath();
+			path = path.substring(0, path.lastIndexOf("/"));
+			path = path.substring(0, path.lastIndexOf("/"));
+			path = path.substring(0, path.lastIndexOf("/"));
+			
+	        File file = new File(path+"/src/screenshot/"+sdf.format(c.getTime())+".jpg");
+	        ImageIO.write(screencapture, "jpg", file);            
+	    }catch (HeadlessException e){
+	    	e.printStackTrace();
+	    }catch (AWTException e){
+	        e.printStackTrace();
+	    }catch (IOException e){
+	        e.printStackTrace();
+	    }
+	}
     
     /**
      * 
