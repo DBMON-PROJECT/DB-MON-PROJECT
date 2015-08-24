@@ -9,12 +9,12 @@ import java.sql.Statement;
 /**
  * 
 * 1. 패키지명 : db
-* 2. 타입명 : DbCommon.java
+* 2. 타입명 : DbClose.java
 * 3. 작성일 : 2015. 8. 12. 오후 12:23:45
 * 4. 작성자 : 길용현
 * 5. 설명 : DB Connection 관련 close 담당 클래스
  */
-public class DbCommon {
+public class DbClose {
 	public static void close(Connection conn){
 		try{
 			conn.close();

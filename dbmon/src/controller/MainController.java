@@ -13,6 +13,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +39,7 @@ import common.ControlCommon;
 import common.DialogCommon;
 
 import db.DBConnection;
-import db.DbCommon;
+import db.DbClose;
 import dto.LoginDto;
 import dto.LoginLogDto;
 
@@ -65,6 +67,48 @@ public class MainController implements Initializable{
     @FXML private Tab realtimeTab;
     @FXML private Tab sessionTab;
     @FXML private Tab schemaTab;
+    @FXML private Tab logTab;
+    
+ 	@Override
+ 	public void initialize(URL location, ResourceBundle resources) {
+ 		// TODO Auto-generated method stub
+ 		tabPane.getSelectionModel().selectedItemProperty().addListener(
+ 				new ChangeListener<Tab>() {
+ 					@Override
+ 					public void changed(
+ 							ObservableValue<? extends Tab> observable,
+ 							Tab oldValue, Tab newValue) {
+ 						if(newValue.getId().equals("realtimeTab")){
+ 							if(!(thread == null) && !(thread.getState().toString().equals("TERMINATED"))){
+ 								thread.resumeThread();
+ 							}
+ 						}else if(newValue.getId().equals("sessionTab")){
+ 							SessionController.instance.sessionSearchHandle();
+ 							if(!(thread == null) && !(thread.getState().toString().equals("TERMINATED"))){
+ 								thread.suspendThread();
+ 							}
+ 						}else if(newValue.getId().equals("schemaTab")){
+ 							SchemaController.instance.schemaSearchHandle();
+ 							if(!(thread == null) && !(thread.getState().toString().equals("TERMINATED"))){
+ 								thread.suspendThread();
+ 							}
+ 						}else if(newValue.getId().equals("logTab")){
+ 							LogFileController.instance.logfileSearchHandle();
+ 							if(!(thread == null) && !(thread.getState().toString().equals("TERMINATED"))){
+ 								thread.suspendThread();
+ 							}
+ 						}
+ 					}
+ 				}
+ 		);
+ 	}
+ 	
+ 	@Override
+ 	protected void finalize() throws Throwable {
+ 		if(DBConnection.isConnection()){
+     		DbClose.close(DBConnection.getConnection());
+     	}
+ 	}
     
     /**
 	 * 
@@ -93,7 +137,7 @@ public class MainController implements Initializable{
 					}
 				
 					if(DBConnection.isConnection()){
-						DbCommon.close(DBConnection.getConnection());
+						DbClose.close(DBConnection.getConnection());
 					}
 					currLoginInfo = selectItem;
 				
@@ -215,7 +259,7 @@ public class MainController implements Initializable{
     			String selectedItem = loginHisCombo.getSelectionModel().getSelectedItem();
     			ControlCommon.getInstance().deleteCombo(loginHisCombo, selectedItem);
     			
-    			DbCommon.close(DBConnection.getConnection());
+    			DbClose.close(DBConnection.getConnection());
     			
     			currLoginInfo = null;
     			ConstantCommon.cnt = 0;
@@ -274,7 +318,7 @@ public class MainController implements Initializable{
     @FXML
     void closeMenuHandle(ActionEvent event) {
     	if(DBConnection.isConnection()){
-    		DbCommon.close(DBConnection.getConnection());
+    		DbClose.close(DBConnection.getConnection());
     	}
 
     	DBMonMain.mainStage.close();
@@ -292,28 +336,4 @@ public class MainController implements Initializable{
     	
     	ControlCommon.getInstance().addCombo(loginHisCombo, item);
     }
-    
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		/*tabPane.getSelectionModel().selectedItemProperty().addListener(
-				new ChangeListener<Tab>() {
-					@Override
-					public void changed(
-							ObservableValue<? extends Tab> observable,
-							Tab oldValue, Tab newValue) {
-						if(newValue == realtimeTab){
-							
-						}
-					}
-				});*/
-	}
-	
-	@Override
-	protected void finalize() throws Throwable {
-		if(DBConnection.isConnection()){
-    		DbCommon.close(DBConnection.getConnection());
-    	}
-	}
-	
 }

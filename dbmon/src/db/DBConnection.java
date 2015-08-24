@@ -56,7 +56,7 @@ public class DBConnection {
 		
 		try{	
 			if(isConnection()){
-				DbCommon.close(conn);
+				DbClose.close(conn);
 			}
 
 			conn = DriverManager.getConnection(url, userId, userPwd);

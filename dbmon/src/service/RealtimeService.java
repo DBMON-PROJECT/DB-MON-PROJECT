@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import controller.RealtimeController;
+import controller.SchemaController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -26,6 +29,8 @@ import dto.WaitEventDto;
 * 5. 설명 : Realtime Monitoring TAB Service 클래스
  */
 public class RealtimeService {
+	private static final Logger LOG = Logger.getLogger(RealtimeService.class);
+	
 	// performence 항목
 	private static XYChart.Series<String, Number> bufferCacheHitSeries;
 	public static ObservableList bufferCacheHitList;
@@ -86,21 +91,6 @@ public class RealtimeService {
 	* 4. 설명 : chart 에서 사용하는  Series, list 초기화
 	 */
 	public void chartListSetting(){
-		/*initChartData(bufferCacheHitSeries, bufferCacheHitList);
-		initChartData(libraryCacheHitSeries, libraryCacheHitList);
-		initChartData(dictionaryCacheHitSeries, dictionaryCacheHitList);
-		initChartData(inMemoryHitSeries, inMemoryHitList);
-		initChartData(bufferBusyWaitSeries, bufferBusyWaitList);
-		initChartData(logFileSyncSeries, logFileSyncList);
-		initChartData(dbFileSequentialSeries, dbFileSequentialList);
-		initChartData(dbFileScatteredSeries, dbFileScatteredList);
-		initChartData(libraryCacheLockSeries, libraryCacheLockList);
-		initChartData(logBufferSpaceSeries, logBufferSpaceList);
-		initChartData(bufferGetstSeries, bufferGetsList);
-		initChartData(cpuTimeSeries, cpuTimeList);
-		initChartData(elapsedTimelSeries, elapsedTimeList);
-		initChartData(executionsSeries, executionsList);
-		initChartData(jdbcConnectSeries, jdbcConnectList);*/
 		// performence 항목
 		bufferCacheHitSeries = new XYChart.Series<String, Number>();
 		bufferCacheHitList = FXCollections
@@ -166,6 +156,19 @@ public class RealtimeService {
 	
 	/**
 	 * 
+	* 1. 메소드명 : barChartColorSetting
+	* 2. 작성일 : 2015. 8. 17. 오후 4:45:27
+	* 3. 작성자 : 길용현
+	* 4. 설명 : bar chart color 설정
+	* @param data
+	* @param color
+	 */
+	private void barChartColorSetting(XYChart.Data<String,Number> data, String color){
+		data.getNode().setStyle("-fx-bar-fill: "+color+";");
+	}
+	
+	/**
+	 * 
 	* 1. 메소드명 : addData
 	* 2. 작성일 : 2015. 8. 13. 오후 10:10:44
 	* 3. 작성자 : 길용현
@@ -219,6 +222,9 @@ public class RealtimeService {
 	    	bufferGetstSeries.getData().add(data1);
 	    	bufferGetstSeries.getData().add(data2);
 	    	bufferGetstSeries.getData().add(data3);
+	    	barChartColorSetting(data1, "#DF1E3A");
+	    	barChartColorSetting(data2, "#F0C74D");
+	    	barChartColorSetting(data3, "#9CC4E4");
 	    }else{
 	    	bufferGetstSeries.getData().get(0).setYValue((Number)bufferGetsValue1);
 	    	bufferGetstSeries.getData().get(1).setYValue((Number)bufferGetsValue2);
@@ -241,6 +247,9 @@ public class RealtimeService {
     		cpuTimeSeries.getData().add(data1);
     	    cpuTimeSeries.getData().add(data2);
     	    cpuTimeSeries.getData().add(data3);
+    	    barChartColorSetting(data1, "#DF1E3A");
+	    	barChartColorSetting(data2, "#F0C74D");
+	    	barChartColorSetting(data3, "#9CC4E4");
     	}else{
     		cpuTimeSeries.getData().get(0).setYValue((Number)cpuTimeValue1);
     		cpuTimeSeries.getData().get(1).setYValue((Number)cpuTimeValue2);
@@ -263,6 +272,9 @@ public class RealtimeService {
 	    	elapsedTimelSeries.getData().add(data1);
 	    	elapsedTimelSeries.getData().add(data2);
 	    	elapsedTimelSeries.getData().add(data3);
+	    	barChartColorSetting(data1, "#DF1E3A");
+	    	barChartColorSetting(data2, "#F0C74D");
+	    	barChartColorSetting(data3, "#9CC4E4");
 	    }else{
 	    	elapsedTimelSeries.getData().get(0).setYValue((Number)elapsedTimeValue1);
 	    	elapsedTimelSeries.getData().get(1).setYValue((Number)elapsedTimeValue2);
@@ -285,6 +297,9 @@ public class RealtimeService {
 	    	executionsSeries.getData().add(data1);
 	    	executionsSeries.getData().add(data2);
 	    	executionsSeries.getData().add(data3);
+	    	barChartColorSetting(data1, "#DF1E3A");
+	    	barChartColorSetting(data2, "#F0C74D");
+	    	barChartColorSetting(data3, "#9CC4E4");
 	    }else{
 	    	executionsSeries.getData().get(0).setYValue((Number)executionsValue1);
 	    	executionsSeries.getData().get(1).setYValue((Number)executionsValue2);
@@ -314,6 +329,7 @@ public class RealtimeService {
 			if(cnt==0){
 				XYChart.Data<String,Number> data = new XYChart.Data<String,Number>(obj +"", (Number)jdbcMap.get(obj).size());
 		    	jdbcConnectSeries.getData().add(data);
+		    	barChartColorSetting(data, "#DF1E3A");
 		    }else{
 		    	jdbcConnectSeries.getData().get(num).setYValue((Number)jdbcMap.get(obj).size());
 		    }
@@ -326,6 +342,25 @@ public class RealtimeService {
 	    if(currentUsersCnt != onlineUsersCnt){
 	    	RealtimeController.realtimeController.setOnlineUserLabel(onlineUsersCnt+"");
 	    }
+	    
+	    LOG.info("");
+	    LOG.info("[Performance] - "+bufferCacheValue+" , "+libraryCacheValue+" , "+dictionaryCacheValue+" , "+inMemoryValue);
+	    LOG.info("[Wait Event] - "+dbFileScatteredReadValue+" , "+dbFileSequentialReadValue+" , "+logFileSyncValue+
+	    		" , "+bufferBusyWaitsValue+" , "+logBufferSpaceValue+" , "+libraryCacheLockValue);
+	    LOG.info("[TOP3 SQL] - "+"("+bufferGetsValue1+" , "+bufferGetsValue2+" , "+bufferGetsValue3+") , "
+	    		+"("+cpuTimeValue1+" , "+cpuTimeValue2+" , "+cpuTimeValue3+"), "
+	    		+"("+elapsedTimeValue1+" , "+elapsedTimeValue2+" , "+elapsedTimeValue3+"), "
+	    		+"("+executionsValue1+" , "+executionsValue2+" , "+executionsValue3+")");
+	    
+	    StringBuffer sb = new StringBuffer();
+	    
+	    for(Object obj : set){
+	    	int key = (int)obj;
+	    	sb.append("("+key+":"+jdbcMap.get(obj).size()+") ");
+	    }
+	    
+	    LOG.info("[JDBC Connection] - "+sb.toString());
+	    LOG.info("[Online Users] - "+onlineUsersCnt);
 	}
 		
 	

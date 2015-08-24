@@ -39,7 +39,7 @@ public class RealtimeController implements Initializable{
     @FXML private BarChart<String, Number> elapsedTimeChart;
     @FXML private BarChart<String, Number> executionsChart;
     // jdbc connection chart
-    @FXML private BarChart<?, ?> jdbcConnectionChart;    
+    @FXML private BarChart<?, ?> jdbcConnectionChart;
     // online users label
     @FXML private Label onlineUsersLabel;
     

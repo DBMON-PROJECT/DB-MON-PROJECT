@@ -128,12 +128,12 @@
 .button:hover {
     -fx-background-color: #3a3a3a;
 }
-
+/*
 .button:pressed, .button:default:hover:pressed {
   -fx-background-color: white;
   -fx-text-fill: #27293B;
 }
-
+ 
 .button:focused {
     -fx-border-color: white, white;
     -fx-border-width: 1, 1;
@@ -156,7 +156,18 @@
 .button:default:hover {
     -fx-background-color: derive(-fx-focus-color,30%);
     
-    
+}
+*/
+.combo-box .list-view {
+	-fx-background-color: #27293B;
+}
+
+.combo-box .list-cell {
+	-fx-background-color: #d1d1d1;
+}
+
+.text-area:readonly{
+	-fx-text-fill: #D1D1D1;
 }
 
 .text-area:readonly .scroll-pane .viewport .content {

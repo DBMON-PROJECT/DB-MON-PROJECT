@@ -14,24 +14,21 @@
    <children>
       <HBox prefHeight="395.0" prefWidth="1300.0">
          <children>
-            <TitledPane contentDisplay="RIGHT" graphicTextGap="1092.0" prefHeight="422.0" prefWidth="1290.0" text="Object Information">
-               <graphic>
-                  <Button fx:id="searchBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#schemaSearchHandle" text="Search" />
-               </graphic>
+            <TitledPane contentDisplay="RIGHT" graphicTextGap="1070.0" prefHeight="422.0" prefWidth="1290.0" text="Object Information">
                <content>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                  <HBox fx:id="JHK1" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
                         <VBox prefHeight="346.0" prefWidth="500.0">
                            <children>
                               <PieChart fx:id="objectChart" focusTraversable="true" prefHeight="360.0" prefWidth="348.0" style="-fx-border-color: #BAB9B7;" title="The Number of Objects Per User" />
                            </children>
                         </VBox>
-                        <HBox prefHeight="150.0" prefWidth="1077.0" spacing="5.0">
+                        <HBox fx:id="JHK1" prefHeight="150.0" prefWidth="1077.0" spacing="5.0">
                            <children>
                               <VBox prefHeight="346.0" prefWidth="174.0" spacing="5.0">
                                  <children>
                                     <Label alignment="CENTER" prefHeight="26.0" prefWidth="181.0" style="-fx-background-color: #BAB9B7;" text="User List" />
-                                    <ListView fx:id="userList" prefHeight="326.0" prefWidth="172.0" style="-fx-border-color: #BAB9B7;" />
+                                    <ListView fx:id="userList" prefHeight="326.0" prefWidth="172.0" />
                                  </children>
                               </VBox>
                               <PieChart fx:id="tableChart" prefHeight="405.0" prefWidth="373.0" style="-fx-border-color: #BAB9B7;" title="The Capacity of Tables Per User" />
@@ -51,9 +48,9 @@
          <children>
             <TitledPane prefHeight="426.0" prefWidth="1344.0" text="Tablespace Information">
                <content>
-                  <VBox>
+                  <VBox fx:id="JHK1">
                      <children>
-                        <TableView fx:id="sessionTv" prefHeight="367.0" prefWidth="1100.0" style="-fx-border-color: #BAB9B7;" stylesheets="@sessionCss.css">
+                        <TableView fx:id="sessionTv" prefHeight="367.0" prefWidth="1100.0">
                           <columns>
                             <TableColumn fx:id="tablespace" prefWidth="75.0" text="TABLESPACE" />
                             <TableColumn fx:id="totalMb" prefWidth="75.0" text="TOTAL(MB)" />

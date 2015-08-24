@@ -10,15 +10,16 @@
    <children>
       <VBox prefHeight="395.0" prefWidth="100.0">
          <children>
-            <TitledPane contentDisplay="RIGHT" graphicTextGap="1087.0" prefHeight="400.0" prefWidth="200.0" text="Session Information">
+            <TitledPane contentDisplay="RIGHT" graphicTextGap="1075.0" prefHeight="400.0" prefWidth="200.0" text="Session Information">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="JHK" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #1E1F2F;">
                      <children>
                         <TableView fx:id="sessionTable" prefHeight="377.0" prefWidth="1288.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="PADDR" />
                             <TableColumn prefWidth="75.0" text="OS USER" />
                               <TableColumn prefWidth="75.0" text="SQL ID" />
+                              <TableColumn prefWidth="75.0" text="COMMAND" />
                               <TableColumn prefWidth="75.0" text="USER NAME" />
                               <TableColumn prefWidth="75.0" text="TYPE" />
                               <TableColumn fx:id="logonCol" prefWidth="75.0" text="LOGON TIME" />
@@ -33,9 +34,6 @@
                      </padding>
                   </VBox>
                </content>
-               <graphic>
-                  <Button fx:id="sessionButton" mnemonicParsing="false" onAction="#sessionSearchHandle" text="Search" />
-               </graphic>
             </TitledPane>
          </children>
       </VBox>
@@ -43,7 +41,7 @@
          <children>
             <TitledPane prefHeight="400.0" prefWidth="650.0" text="Bind Variable">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox fx:id="JHK" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #1E1F2F;">
                      <children>
                         <TableView fx:id="bindTable" prefHeight="370.0" prefWidth="631.0">
                           <columns>

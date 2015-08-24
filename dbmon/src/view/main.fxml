@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="890.0" prefWidth="1300.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="899.0" prefWidth="1300.0" stylesheets="@../css/main.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
       <HBox prefHeight="30.0" prefWidth="1300.0">
          <children>
@@ -48,13 +48,13 @@
             <ToolBar prefHeight="33.0" prefWidth="1350.0">
               <items>
                   <ComboBox fx:id="loginHisCombo" onAction="#loginComboHandle" prefWidth="150.0" />
-                <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginHandle" text="connect" />
-                  <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeHandle" text="disconnect" />
-                  <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startHandle" text="start" />
+                <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginHandle" opacity="0.71" text="connect" />
+                  <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeHandle" opacity="0.71" text="disconnect" />
+                  <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startHandle" opacity="0.71" text="start" />
                   <HBox prefHeight="30.0" prefWidth="555.0" />
                   <ImageView fitHeight="29.0" fitWidth="251.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 2; -fx-scale-y: 1.3;">
                   	 <image>
-                  	 <Image url="@../image/KakaoTalk_20150821_192843307.gif" />
+                  	 <Image url="@../image/banner.gif" />
                      </image>
                   </ImageView>
               </items>
@@ -75,6 +75,11 @@
                <content>
                   <fx:include source="schemaMon.fxml" />
                </content></Tab>
+            <Tab fx:id="logTab" closable="false" text="Log File Profiling">
+               <content>
+                  <fx:include source="logfilemon.fxml" />
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
    </children>

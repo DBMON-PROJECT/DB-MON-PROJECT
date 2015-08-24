@@ -11,7 +11,7 @@ import java.util.HashSet;
 
 import sql.RealtimeSQL;
 import db.DBConnection;
-import db.DbCommon;
+import db.DbClose;
 import dto.PerformenceDto;
 import dto.TopSqlDto;
 import dto.WaitEventDto;
@@ -68,8 +68,8 @@ public class RealtimeMonDao {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			DbCommon.close(rs);
-			DbCommon.close(stmt);
+			DbClose.close(rs);
+			DbClose.close(stmt);
 		}
 		
 		return list;
@@ -102,8 +102,8 @@ public class RealtimeMonDao {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			DbCommon.close(rs);
-			DbCommon.close(stmt);
+			DbClose.close(rs);
+			DbClose.close(stmt);
 		}
 		
 		return list;
@@ -138,8 +138,8 @@ public class RealtimeMonDao {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			DbCommon.close(rs);
-			DbCommon.close(stmt);
+			DbClose.close(rs);
+			DbClose.close(stmt);
 		}
 		
 		return list;
@@ -197,8 +197,8 @@ public class RealtimeMonDao {
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
-			DbCommon.close(rs);
-			DbCommon.close(stmt);
+			DbClose.close(rs);
+			DbClose.close(stmt);
 		}
 		
 		return jdbcMap;
@@ -229,8 +229,8 @@ public class RealtimeMonDao {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
-			DbCommon.close(rs);
-			DbCommon.close(stmt);
+			DbClose.close(rs);
+			DbClose.close(stmt);
 		}
 		
 		return cnt;

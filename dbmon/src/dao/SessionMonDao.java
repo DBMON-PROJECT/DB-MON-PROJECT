@@ -60,12 +60,13 @@ public class SessionMonDao {
 
 			while (rs.next()) {
 				SessionCheckDto dto = new SessionCheckDto();
-				dto.setSqlId(rs.getString("sqlId"));
-				dto.setOsUser(rs.getString("osUser"));
-				dto.setLogonTime(rs.getString("logonTime"));
-				dto.setPaddr(rs.getString("paddr"));
-				dto.setUsername(rs.getString("username"));
-				dto.setType(rs.getString("type"));
+				dto.setSqlId(rs.getString("SQL_ID"));
+				dto.setOsUser(rs.getString("OSUSER"));
+				dto.setLogonTime(rs.getString("LOGON_TIME"));
+				dto.setPaddr(rs.getString("PADDR"));
+				dto.setUsername(rs.getString("USERNAME"));
+				dto.setType(rs.getString("TYPE"));
+				dto.setCommand(rs.getString("COMMAND"));
 				list.add(dto);
 			}
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #1E1F2F;" text="Log File List" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LogFileController">
+   <content>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" style="-fx-background-color: #1E1F2F;">
+         <children>
+            <VBox prefHeight="686.0" prefWidth="295.0" style="-fx-border-color: #C8C8C8;">
+               <children>
+                  <ListView fx:id="logListView" prefHeight="764.0" prefWidth="295.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="745.0" prefWidth="989.0" style="-fx-border-color: #C8C8C8;">
+               <children>
+                  <TextArea fx:id="logText" editable="false" prefHeight="756.0" prefWidth="986.0" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+   </content>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</TitledPane>

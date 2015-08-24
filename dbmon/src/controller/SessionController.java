@@ -39,10 +39,8 @@ import dto.SessionCheckDto;
  */
 public class SessionController implements Initializable{
 	//Tap 2 에 쓰이는 기능
-    @FXML
-    private TextArea fulltext;
+    @FXML private TextArea fulltext;
     @FXML private TextArea plantext;
-    @FXML private Button sessionButton;
     
     //SessionCheckTableView
     @FXML private TableView sessionTable;
@@ -50,6 +48,8 @@ public class SessionController implements Initializable{
      
     //BindCheckTableView
     @FXML private TableView bindTable;
+    
+    public static SessionController instance;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -85,6 +85,8 @@ public class SessionController implements Initializable{
 			});
 			return row;
 		});
+		
+		instance = this;
 	}
 	
 	/**
@@ -114,20 +116,19 @@ public class SessionController implements Initializable{
 	* 4. 설명 : Session Monitoring 쪽 Search 버튼 이벤트 처리
 	* @param event
 	 */
-	@FXML
-    void sessionSearchHandle(ActionEvent event) {
+    public void sessionSearchHandle() {
 		if(!DBConnection.isConnection()){
 			DialogCommon.alert("데이터베이스에 연결되어있지 않습니다.");
 			return;
 		}
-
+		
 		ControlCommon common = ControlCommon.getInstance();
 		ArrayList<SessionCheckDto> sessioncheck = SessionMonDao.getInstance().getSessionCheckSqlData();
 		
 		if (sessioncheck.size() != 0) {
+			System.out.println(sessionTable);
 			common.insertTable(sessionTable, sessioncheck, TableColumnCommon.getInstance().getSessionCheckColumn());
 			CellColor(SessionMonDao.getInstance().getSessionCheckSqlData(),logonCol);
 		}
-
     }
 }

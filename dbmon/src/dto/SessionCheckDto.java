@@ -17,6 +17,7 @@ public class SessionCheckDto {
 	private String paddr;
 	private String username;
 	private String type;
+	private String command;
 	
 	public String getSqlId() {
 		return sqlId;
@@ -53,6 +54,12 @@ public class SessionCheckDto {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getCommand() {
+		return command;
+	}
+	public void setCommand(String command) {
+		this.command = command;
 	}
 	
 	@Override

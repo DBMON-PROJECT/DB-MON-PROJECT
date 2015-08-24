@@ -18,7 +18,7 @@
                      <content>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-background-color: #27293B;">
                            <children>
-                              <LineChart fx:id="bufCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Cache Hit Ratio">
+                              <LineChart fx:id="bufCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Cache Hit Ratio" verticalGridLinesVisible="false">
                                 <xAxis>
                                   <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                 </xAxis>
@@ -26,28 +26,28 @@
                                   <NumberAxis autoRanging="false" side="LEFT" tickUnit="20.0" />
                                 </yAxis>
                               </LineChart>
-                              <LineChart fx:id="libCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Hit Ratio">
+                              <LineChart fx:id="libCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Hit Ratio" verticalGridLinesVisible="false">
                                  <xAxis>
                                     <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                  </xAxis>
                                  <yAxis>
-                                    <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
+                                    <NumberAxis autoRanging="false" side="LEFT" tickUnit="20.0" />
                                  </yAxis>
                               </LineChart>
-                              <LineChart fx:id="dicCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Dictionary Cache Hit Ratio">
+                              <LineChart fx:id="dicCacheChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Dictionary Cache Hit Ratio" verticalGridLinesVisible="false">
                                  <xAxis>
                                     <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                  </xAxis>
                                  <yAxis>
-                                    <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
+                                    <NumberAxis autoRanging="false" side="LEFT" tickUnit="20.0" />
                                  </yAxis>
                               </LineChart>
-                              <LineChart fx:id="inMemoryChart" animated="false" centerShape="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="In Memory Sort Hit Ratio">
+                              <LineChart fx:id="inMemoryChart" animated="false" centerShape="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="In Memory Sort Hit Ratio" verticalGridLinesVisible="false">
                                  <xAxis>
                                     <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                  </xAxis>
                                  <yAxis>
-                                    <NumberAxis autoRanging="false" side="LEFT" tickUnit="10.0" />
+                                    <NumberAxis autoRanging="false" side="LEFT" tickUnit="20.0" />
                                  </yAxis>
                               </LineChart>
                            </children>
@@ -72,7 +72,7 @@
                                  <children>
                                     <HBox prefHeight="200.0" prefWidth="200.0" spacing="5.0" style="-fx-background-color: #27293B;">
                                        <children>
-                                          <LineChart fx:id="dbScatteredChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Scattered Read">
+                                          <LineChart fx:id="dbScatteredChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Scattered Read" verticalGridLinesVisible="false">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                             </xAxis>
@@ -80,7 +80,7 @@
                                               <NumberAxis side="LEFT" />
                                             </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="dbSequentialChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Sequential Read">
+                                          <LineChart fx:id="dbSequentialChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="DB File Sequential Read" verticalGridLinesVisible="false">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
@@ -88,7 +88,7 @@
                                                 <NumberAxis side="LEFT" />
                                              </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="logFileSyncChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log File Sync">
+                                          <LineChart fx:id="logFileSyncChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log File Sync" verticalGridLinesVisible="false">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
@@ -100,7 +100,7 @@
                                     </HBox>
                                     <HBox prefHeight="200.0" prefWidth="200.0" spacing="5.0">
                                        <children>
-                                          <LineChart fx:id="bufBusyWaitsChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Busy Waits">
+                                          <LineChart fx:id="bufBusyWaitsChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Buffer Busy Waits" verticalGridLinesVisible="false">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                             </xAxis>
@@ -108,7 +108,7 @@
                                               <NumberAxis side="LEFT" />
                                             </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="logBufferSpaceChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log Buffer Space">
+                                          <LineChart fx:id="logBufferSpaceChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Log Buffer Space" verticalGridLinesVisible="false">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
@@ -116,7 +116,7 @@
                                                 <NumberAxis side="LEFT" />
                                              </yAxis>
                                           </LineChart>
-                                          <LineChart fx:id="libraryCacheLockChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Lock">
+                                          <LineChart fx:id="libraryCacheLockChart" animated="false" createSymbols="false" style="-fx-border-color: #BAB9B7; -fx-border-width: 1;" title="Library Cache Lock" verticalGridLinesVisible="false">
                                              <xAxis>
                                                 <CategoryAxis side="BOTTOM" tickLabelsVisible="false" />
                                              </xAxis>
@@ -207,12 +207,12 @@
                               </TitledPane>
                               <TitledPane prefHeight="211.0" prefWidth="234.0" text="Online Users">
                                  <content>
-                                    <HBox prefHeight="57.0" prefWidth="231.0" style="-fx-background-color: #27293B; -fx-border-color: #FFFFFF;">
+                                    <HBox prefHeight="57.0" prefWidth="231.0" style="-fx-background-color: #1E1F2F;">
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
                                        </padding>
                                        <children>
-                                          <Label fx:id="onlineUsersLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="142.0" prefWidth="222.0" style="-fx-border-color: #FFFFFF; -fx-border-width: 0;" text="0" textFill="WHITE">
+                                          <Label fx:id="onlineUsersLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="142.0" prefWidth="222.0" style="-fx-background-color: #1E1F2F; -fx-border-width: 0;" text="0" textFill="#d1d1d1">
                                              <font>
                                                 <Font size="72.0" />
                                              </font>
