@@ -16,6 +16,7 @@ public class MainThreadService extends Thread{
 	private boolean stop ;
 	private boolean suspend ;
 	private RealtimeService realtimeService = RealtimeService.getInstance();
+	private boolean soundBol = false;
 	
 	public MainThreadService(){
 		stop = true;
@@ -32,15 +33,31 @@ public class MainThreadService extends Thread{
 						if(ConstantCommon.cnt==0){
 							RealtimeController.realtimeController.initAllData();
 						}
-					
-						// chart data add
-						realtimeService.addData(ConstantCommon.cnt);
+						
+						if(ConstantCommon.cnt >= 15){
+							// chart data add
+							soundBol = realtimeService.addData(ConstantCommon.cnt);
+							
+							if(soundBol){
+								realtimeService.playSound();
+							}
+						}else{
+							realtimeService.addLoadingData(ConstantCommon.cnt);
+						}
 					}
 				});
 			}
 			
 			try {
-				Thread.sleep(3000);
+				if(ConstantCommon.cnt >= 15){
+					Thread.sleep(3000);
+					
+					if(soundBol){
+						realtimeService.stopSound();
+					}
+				}else{
+					Thread.sleep(100);
+				}
 			} catch (InterruptedException ex) {
 				break;
 			}

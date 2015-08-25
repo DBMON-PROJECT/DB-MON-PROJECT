@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * 
@@ -28,9 +29,12 @@ public class DBMonMain extends Application{
 		mainStage = primaryStage;
 		Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
 		Scene scene = new Scene(root);
-		
+
+		primaryStage.setResizable(false);
+		primaryStage.setWidth(1305);
+		primaryStage.setHeight(925);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("메인 화면");
+		primaryStage.setTitle("DBMON");
 		primaryStage.show();
 	}
 }

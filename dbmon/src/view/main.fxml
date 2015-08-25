@@ -14,7 +14,7 @@
    <children>
       <HBox prefHeight="30.0" prefWidth="1300.0">
          <children>
-            <MenuBar prefHeight="43.0" prefWidth="1348.0">
+            <MenuBar fx:id="menuBar" prefHeight="43.0" prefWidth="1348.0">
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>

@@ -61,19 +61,16 @@ public class SessionController implements Initializable{
 					ControlCommon common = ControlCommon.getInstance();
 					String sqlId = sessionDto.getSqlId(); // 원래의 select 값
 
-					ArrayList<BindCheckDto> bindcheck = SessionMonDao
-							.getInstance().getBindCheckSqlData(sqlId);
+					ArrayList<BindCheckDto> bindcheck = SessionMonDao.getInstance().getBindCheckSqlData(sqlId);
+					
 					if (bindcheck.size() != 0) {
 						common.insertTable(bindTable, bindcheck,
 								TableColumnCommon.getInstance()
 										.getBindCheckColumn());
 					} else {
 						// 테이블의 사이즈 가 0 일경우 NULL 을 표시해서 집어넣는다.
-						bindcheck.add(new BindCheckDto("N", "U", "L", "L",
-								" "));
-						common.insertTable(bindTable, bindcheck,
-								TableColumnCommon.getInstance()
-										.getBindCheckColumn());
+						bindcheck.add(new BindCheckDto("N", "U", "L", "L", " "));
+						common.insertTable(bindTable, bindcheck, TableColumnCommon.getInstance().getBindCheckColumn());
 					}
 					
 					SessionMonDao dao = SessionMonDao.getInstance();
@@ -126,9 +123,8 @@ public class SessionController implements Initializable{
 		ArrayList<SessionCheckDto> sessioncheck = SessionMonDao.getInstance().getSessionCheckSqlData();
 		
 		if (sessioncheck.size() != 0) {
-			System.out.println(sessionTable);
 			common.insertTable(sessionTable, sessioncheck, TableColumnCommon.getInstance().getSessionCheckColumn());
-			CellColor(SessionMonDao.getInstance().getSessionCheckSqlData(),logonCol);
+			CellColor(sessioncheck, logonCol);
 		}
     }
 }

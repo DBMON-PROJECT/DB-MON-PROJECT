@@ -141,7 +141,6 @@ public class SessionMonDao {
 			while (rs.next()) {
 				ConstantCommon.sqlFullText.append(rs.getString("SQL_FULLTEXT"));
 			}
-			System.out.println(ConstantCommon.sqlFullText.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

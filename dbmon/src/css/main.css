@@ -270,6 +270,11 @@
 	-fx-border-color: #C8C8C8;
 }
 
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-text-fill: white;
+}
+
 .list-cell:filled {
 	-fx-text-fill: #C8C8C8;
 	-fx-background-color: #27293B;
@@ -282,4 +287,16 @@
 #JHK .text {
 	-fx-fill: #C2C2C2;
 	-fx-font-size: 12px;
+}
+
+.cell-red {
+	-fx-background-color: #DF1E3A;
+}
+
+.cell-yellow {
+	-fx-background-color: #FDF855;
+}
+
+.cell-green {
+	-fx-background-color: #2E8B57;
 }

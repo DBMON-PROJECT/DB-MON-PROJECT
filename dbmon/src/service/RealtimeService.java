@@ -1,20 +1,20 @@
 package service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 import org.apache.log4j.Logger;
 
 import controller.RealtimeController;
-import controller.SchemaController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
 import dao.RealtimeMonDao;
 import dto.PerformenceDto;
 import dto.TopSqlDto;
@@ -70,7 +70,22 @@ public class RealtimeService {
     public static ObservableList jdbcConnectList;
     
     private static RealtimeService instance;
+    
+    // chart initialize 시 사용하는 변수
+    private int increasefun = 0;
+    private int decreasefun = 0;
+    private int c = 0;
+    
+    // sound 관련 변수
+    private static Media media;
+	private static MediaPlayer mediaPlayer;
+	private static String path = System.getProperty("user.dir")+"/src/sound/warning.mp3";
 	
+	static {
+		media = new Media(new File(path).toURI().toString());
+		mediaPlayer = new MediaPlayer(media);
+	}
+    
 	private RealtimeService(){
 		
 	}
@@ -174,7 +189,7 @@ public class RealtimeService {
 	* 3. 작성자 : 길용현
 	* 4. 설명 : 각 차트 별 데이터 추가
 	 */
-	public void addData(int cnt){
+	public boolean addData(int cnt){
 		// performence 항목 chart data 추가
 		ArrayList<PerformenceDto> performenceList = RealtimeMonDao.getInstance().getPerformenceData();
 		double bufferCacheValue = ((PerformenceDto)performenceList.get(0)).getValue();
@@ -215,7 +230,7 @@ public class RealtimeService {
 	    	bufferGetsValue3 = ((TopSqlDto)topSqlList.get(0)).getTop3();
 	    }
 	    
-	    if(cnt==0){
+	    if(cnt==15){
 	    	XYChart.Data<String,Number> data1 = new XYChart.Data<String,Number>("1", (Number)bufferGetsValue1);
 	    	XYChart.Data<String,Number> data2 = new XYChart.Data<String,Number>("2", (Number)bufferGetsValue2);
 	    	XYChart.Data<String,Number> data3 = new XYChart.Data<String,Number>("3", (Number)bufferGetsValue3);
@@ -240,7 +255,7 @@ public class RealtimeService {
     		cpuTimeValue3 = ((TopSqlDto)topSqlList.get(1)).getTop3();
     	}
     	
-    	if(cnt==0){
+    	if(cnt==15){
     		XYChart.Data<String,Number> data1 = new XYChart.Data<String,Number>("1", (Number)cpuTimeValue1);
 	    	XYChart.Data<String,Number> data2 = new XYChart.Data<String,Number>("2", (Number)cpuTimeValue2);
 	    	XYChart.Data<String,Number> data3 = new XYChart.Data<String,Number>("3", (Number)cpuTimeValue3);
@@ -265,7 +280,7 @@ public class RealtimeService {
 	    	elapsedTimeValue3 = ((TopSqlDto)topSqlList.get(2)).getTop3();
 	    }
 	    
-	    if(cnt==0){
+	    if(cnt==15){
 	    	XYChart.Data<String,Number> data1 = new XYChart.Data<String,Number>("1", (Number)elapsedTimeValue1);
 	    	XYChart.Data<String,Number> data2 = new XYChart.Data<String,Number>("2", (Number)elapsedTimeValue2);
 	    	XYChart.Data<String,Number> data3 = new XYChart.Data<String,Number>("3", (Number)elapsedTimeValue3);
@@ -290,7 +305,7 @@ public class RealtimeService {
 	    	executionsValue3 = ((TopSqlDto)topSqlList.get(3)).getTop3();
 	    }
 	    
-	    if(cnt==0){
+	    if(cnt==15){
 	    	XYChart.Data<String,Number> data1 = new XYChart.Data<String,Number>("1", (Number)executionsValue1);
 	    	XYChart.Data<String,Number> data2 = new XYChart.Data<String,Number>("2", (Number)executionsValue2);
 	    	XYChart.Data<String,Number> data3 = new XYChart.Data<String,Number>("3", (Number)executionsValue3);
@@ -306,7 +321,7 @@ public class RealtimeService {
 	    	executionsSeries.getData().get(2).setYValue((Number)executionsValue3);
 	    }
 	    
-	    if(cnt>=30){
+	    if(cnt>=45){
 	    	bufferCacheHitSeries.getData().remove(0);
 	        libraryCacheHitSeries.getData().remove(0);
 	        dictionaryCacheHitSeries.getData().remove(0);
@@ -326,7 +341,7 @@ public class RealtimeService {
 		for(Object obj : set){
 			int num = (int)obj;
 			
-			if(cnt==0){
+			if(cnt==15){
 				XYChart.Data<String,Number> data = new XYChart.Data<String,Number>(obj +"", (Number)jdbcMap.get(obj).size());
 		    	jdbcConnectSeries.getData().add(data);
 		    	barChartColorSetting(data, "#DF1E3A");
@@ -361,7 +376,53 @@ public class RealtimeService {
 	    
 	    LOG.info("[JDBC Connection] - "+sb.toString());
 	    LOG.info("[Online Users] - "+onlineUsersCnt);
+	    
+	    if(bufferCacheValue < 90 || libraryCacheValue < 90 || dictionaryCacheValue < 90 ||
+	    		inMemoryValue < 90){
+			return true;
+		}
+	    
+	    return false;
 	}
-		
 	
+	/**
+	 * 
+	* 1. 메소드명 : addLoadingData
+	* 2. 작성일 : 2015. 8. 24. 오후 12:09:59
+	* 3. 작성자 : 길용현
+	* 4. 설명 : 초기 그래프 셋팅
+	* @param cnt
+	 */
+	public void addLoadingData(int cnt) {
+		if (cnt == 0) {
+			increasefun = 0;
+			decreasefun = 100;
+		} else if (cnt % 5 == 0) {
+			c++;
+			increasefun = 33 * c;
+			decreasefun = 100 - (33 * c);
+		}
+		
+		// performence 항목 chart data 추가
+		bufferCacheHitSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) increasefun));
+		libraryCacheHitSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) decreasefun));
+		dictionaryCacheHitSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) increasefun));
+		inMemoryHitSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) decreasefun));
+
+		// wait event 항목 chart data 추가
+		bufferBusyWaitSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) increasefun));
+		logFileSyncSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) decreasefun));
+		dbFileSequentialSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) increasefun));
+		dbFileScatteredSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) decreasefun));
+		libraryCacheLockSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) increasefun));
+		logBufferSpaceSeries.getData().add(new XYChart.Data<String, Number>(cnt + "",(Number) decreasefun));
+	}
+	
+	public void playSound(){
+		mediaPlayer.play();
+	}
+	
+	public void stopSound(){
+		mediaPlayer.stop();
+	}
 }

@@ -188,7 +188,7 @@ public class MainController implements Initializable{
     void loginHandle(ActionEvent event) {
     	Stage dialog = new Stage(StageStyle.DECORATED);
     	dialog.initModality(Modality.APPLICATION_MODAL);
-    	dialog.setTitle("로그인 화면");
+    	dialog.setTitle("LOGIN");
     	
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
     	
@@ -200,6 +200,8 @@ public class MainController implements Initializable{
     		e.printStackTrace();
     	}
     	
+    	dialog.initStyle(StageStyle.UTILITY);
+    	dialog.setResizable(false);
     	dialog.setScene(new Scene(parent));
     	dialog.show();
     	

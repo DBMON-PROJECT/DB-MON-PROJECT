@@ -1,30 +1,13 @@
 package controller;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
-
-
-
-
-
-
-import org.apache.log4j.Logger;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,14 +24,16 @@ import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
-import sql.SchemaSQL;
+
+import org.apache.log4j.Logger;
+
 import common.BackgroundTableCell;
 import common.ControlCommon;
 import common.DialogCommon;
 import common.TableColumnCommon;
+
 import dao.SchemaMonDao;
 import db.DBConnection;
-import db.DbClose;
 import dto.TablespaceDto;
 
 public class SchemaController implements Initializable {
@@ -459,5 +444,7 @@ public class SchemaController implements Initializable {
 		ArrayList<TablespaceDto> list = dao.getTablespaceList();
 
 		ControlCommon.getInstance().insertTable(sessionTv, list, TableColumnCommon.getInstance().getTablespaceColumn());
+		CellColor(list, freePer);
+		CellColor(list, distState);
 	}
 }

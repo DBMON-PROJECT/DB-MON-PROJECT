@@ -99,14 +99,14 @@ public class LoginService {
 			cnfe.printStackTrace();
 		}
 		
-		String pattern = "(\\w+)(\\s*=\\s*\r\n)"+
+		String pattern = "\\s*(\\w+)(\\s*=\\s*\r\n)"+
                 "(\\s*[(]\\s*DESCRIPTION\\s*=\\s*\r\n)"+
-		         "(\\s*[(]\\s*ADDRESS\\s*=\\s*[(]\\s*PROTOCOL\\s*=\\s*\\w+\\s*[)])"+
-                "(\\s*[(]\\w+\\s*=\\s*)([\\w|\\.]+)(\\s*[)]\\s*[(]\\s*PORT\\s*=\\s*)(\\w+)(\\s*[)]\\s*[)]\\s*\r\n)"+
-				 "(\\s*[(]\\s*CONNECT_DATA\\s*=\\s*\r\n)"+
+		        "(\\s*[(]\\s*ADDRESS\\s*=\\s*[(]\\s*PROTOCOL\\s*=\\s*\\w+\\s*[)])"+
+                "(\\s*[(]HOST\\s*=\\s*)(.*)(\\s*[)]\\s*[(]\\s*PORT\\s*=\\s*)(\\w+)(\\s*[)]\\s*[)]\\s*\r\n)"+
+				"(\\s*[(]\\s*CONNECT_DATA\\s*=\\s*\r\n)"+
                 "(\\s*[(]\\s*SERVER\\s*=\\s*DEDICATED\\s*[)]\\s*\r\n)"+
-				 "(\\s*[(]\\s*SERVICE_NAME\\s*=\\s*)(\\w+)([)]\\s*\r\n)"+
-                "(\\s*[)]\r\n)(\\s*[)]\r\n)";
+				"(\\s*[(]\\s*SERVICE_NAME\\s*=\\s*)(\\w+)([)]\\s*\r\n)"+
+                "(\\s*[)]\r\n)(\\s*[)][\r\n]*)";
 		
 		
 		Pattern pt = Pattern.compile(pattern);
@@ -117,11 +117,7 @@ public class LoginService {
 		while(mc.find()){
 			loginInfo.add(new LoginDto(mc.group(1), mc.group(6), mc.group(8), mc.group(13),mc.group()));
 		}
-	
-		if(mc.matches()){
-			System.out.println("노매치컨텐츠");
-		}
-		
+
 		return loginInfo;
 	}
 	

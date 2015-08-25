@@ -47,52 +47,126 @@ public class RealtimeSQL {
                                              "'library cache lock')) B "+
                                              "WHERE A.EVENT(+) = B.EVENT_NAME";	
 	
-	public static String topSql = "WITH SQL_LIST AS " + "(SELECT B.SQL_ID, "
-			+ "B.EXECUTIONS, " + "B.BUFFER_GETS, " + "B.CPU_TIME, "
-			+ "B.ELAPSED_TIME "
-			+ "FROM (SELECT NVL(SQL_ID, PREV_SQL_ID) SQL_ID "
-			+ "FROM V$SESSION " + "WHERE USERNAME IS NOT NULL "
-			+ "AND USERNAME NOT IN ('SYSMAN', " + "'DBSNMP')) A, "
-			+ "(SELECT SQL_ID , " + "SORTS , " + "EXECUTIONS , "
-			+ "PARSE_CALLS , " + "DISK_READS , " + "USER_IO_WAIT_TIME , "
-			+ "BUFFER_GETS , " + "ROUND(CPU_TIME/1000000,3) CPU_TIME, "
-			+ "ROUND(ELAPSED_TIME/1000000, 3) ELAPSED_TIME, "
-			+ "PHYSICAL_READ_REQUESTS , " + "PHYSICAL_READ_BYTES "
-			+ "FROM V$SQLAREA " + "WHERE SQL_FULLTEXT NOT LIKE '%V$%' "
-			+ "AND SQL_FULLTEXT NOT LIKE '%DBA%' "
-			+ "AND SQL_FULLTEXT NOT LIKE '%ALL%' "
-			+ "AND SQL_FULLTEXT NOT LIKE '%USER%') B "
-			+ "WHERE A.SQL_ID = B.SQL_ID) "
-			+ "SELECT 'Buffer Gets Top3' TYPE, " + "NVL(TOP1, 0) TOP1, " + "NVL(TOP2, 0) TOP2, "
-			+ "NVL(TOP3, 0) TOP3 " + "FROM (SELECT BUFFER_GETS TOP1, "
-			+ "LEAD(BUFFER_GETS,1) OVER (ORDER BY BUFFER_GETS DESC) TOP2, "
-			+ "LEAD(BUFFER_GETS,2) OVER (ORDER BY BUFFER_GETS DESC) TOP3 "
-			+ "FROM (SELECT SQL_ID, " + "BUFFER_GETS "
-			+ "FROM (SELECT SQL_ID, " + "BUFFER_GETS " + "FROM SQL_LIST "
-			+ "ORDER BY BUFFER_GETS DESC) " + "WHERE ROWNUM <= 3) " + ") "
-			+ "WHERE ROWNUM <=1 " + "UNION ALL "
-			+ "SELECT 'CPU Time Top3' TYPE, " + "NVL(TOP1, 0) TOP1, " + "NVL(TOP2, 0) TOP2, " + "NVL(TOP3, 0) TOP3 "
-			+ "FROM (SELECT CPU_TIME TOP1, "
-			+ "LEAD(CPU_TIME,1) OVER (ORDER BY CPU_TIME DESC) TOP2, "
-			+ "LEAD(CPU_TIME,2) OVER (ORDER BY CPU_TIME DESC) TOP3 "
-			+ "FROM (SELECT SQL_ID, " + "CPU_TIME " + "FROM (SELECT SQL_ID, "
-			+ "CPU_TIME " + "FROM SQL_LIST " + "ORDER BY CPU_TIME DESC) "
-			+ "WHERE ROWNUM <= 3) " + ") " + "WHERE ROWNUM <=1 " + "UNION ALL "
-			+ "SELECT 'Elapsed Time Top3' TYPE, " + "NVL(TOP1, 0) TOP1, " + "NVL(TOP2, 0) TOP2, "
-			+ "NVL(TOP3, 0) TOP3 " + "FROM (SELECT ELAPSED_TIME TOP1, "
-			+ "LEAD(ELAPSED_TIME,1) OVER (ORDER BY ELAPSED_TIME DESC) TOP2, "
-			+ "LEAD(ELAPSED_TIME,2) OVER (ORDER BY ELAPSED_TIME DESC) TOP3 "
-			+ "FROM (SELECT SQL_ID, " + "ELAPSED_TIME "
-			+ "FROM (SELECT SQL_ID, " + "ELAPSED_TIME " + "FROM SQL_LIST "
-			+ "ORDER BY ELAPSED_TIME DESC) " + "WHERE ROWNUM <= 3) " + ") "
-			+ "WHERE ROWNUM <=1 " + "UNION ALL "
-			+ "SELECT 'Executions Top3' TYPE, " + "NVL(TOP1, 0) TOP1, " + "NVL(TOP2, 0) TOP2, " + "NVL(TOP3, 0) TOP3 "
-			+ "FROM (SELECT EXECUTIONS TOP1, "
-			+ "LEAD(EXECUTIONS,1) OVER (ORDER BY EXECUTIONS DESC) TOP2, "
-			+ "LEAD(EXECUTIONS,2) OVER (ORDER BY EXECUTIONS DESC) TOP3 "
-			+ "FROM (SELECT SQL_ID, " + "EXECUTIONS " + "FROM (SELECT SQL_ID, "
-			+ "EXECUTIONS " + "FROM SQL_LIST " + "ORDER BY EXECUTIONS DESC) "
-			+ "WHERE ROWNUM <= 3) " + ") " + "WHERE ROWNUM <=1 ORDER BY TYPE";
+	public static String topSql = "WITH SQL_LIST AS "+
+			"(SELECT B.SQL_ID, "+
+				       "B.EXECUTIONS, "+
+				       "B.BUFFER_GETS, "+
+				       "B.CPU_TIME, "+
+				       "B.ELAPSED_TIME "+
+				  "FROM (SELECT DISTINCT NVL(SQL_ID, PREV_SQL_ID) SQL_ID "+
+				          "FROM V$SESSION "+
+				         "WHERE USERNAME IS NOT NULL "+
+				           "AND USERNAME NOT IN ('SYSMAN', "+
+				                                "'DBSNMP')) A, "+
+				       "(SELECT SQL_ID , "+
+				               "SORTS , "+
+				               "EXECUTIONS , "+
+				               "PARSE_CALLS , "+
+				               "DISK_READS , "+
+				               "USER_IO_WAIT_TIME , "+
+				               "BUFFER_GETS , "+
+				               "ROUND(CPU_TIME/1000000,3) CPU_TIME, "+
+				               "ROUND(ELAPSED_TIME/1000000, 3) ELAPSED_TIME, "+
+				               "PHYSICAL_READ_REQUESTS , "+
+				               "PHYSICAL_READ_BYTES "+
+				          "FROM V$SQLAREA "+
+				          "WHERE SQL_FULLTEXT NOT LIKE '%V$%' "+
+				          "AND SQL_FULLTEXT NOT LIKE '%DBA%' "+
+				          "AND SQL_FULLTEXT NOT LIKE '%ALL%' "+
+				          "AND SQL_FULLTEXT NOT LIKE '%USER%') B "+
+				 "WHERE A.SQL_ID = B.SQL_ID) "+
+				"SELECT 'Buffer Gets Top3' TYPE, "+
+				       "SQL_ID1, "+
+				       "NVL(TOP1, 0) TOP1, "+
+				       "SQL_ID2, "+
+				       "NVL(TOP2, 0) TOP2, "+
+				       "SQL_ID3, "+
+				       "NVL(TOP3, 0) TOP3 "+
+				"FROM (SELECT BUFFER_GETS TOP1, "+
+				             "SQL_ID SQL_ID1, "+
+				             "LEAD(BUFFER_GETS,1) OVER (ORDER BY BUFFER_GETS DESC) TOP2, "+
+				             "LEAD(SQL_ID,1) OVER (ORDER BY BUFFER_GETS DESC) SQL_ID2, "+
+				             "LEAD(BUFFER_GETS,2) OVER (ORDER BY BUFFER_GETS DESC) TOP3, "+
+				             "LEAD(SQL_ID,2) OVER (ORDER BY BUFFER_GETS DESC) SQL_ID3 "+
+				      "FROM (SELECT SQL_ID, "+
+				                   "BUFFER_GETS "+
+				            "FROM (SELECT SQL_ID, "+
+				                         "BUFFER_GETS "+
+				                  "FROM SQL_LIST "+
+				                  "ORDER BY BUFFER_GETS DESC) "+
+				            "WHERE ROWNUM <= 3) "+
+				      ") "+
+				"WHERE ROWNUM <=1 "+
+				"UNION ALL "+
+				"SELECT 'CPU Time Top3' TYPE, "+
+				       "SQL_ID1, "+
+				       "NVL(TOP1, 0) TOP1, "+
+				       "SQL_ID2, "+
+				       "NVL(TOP2, 0) TOP2, "+
+				       "SQL_ID3, "+
+				       "NVL(TOP3, 0) TOP3 "+
+				"FROM (SELECT CPU_TIME TOP1, "+
+				             "SQL_ID SQL_ID1, "+
+				             "LEAD(CPU_TIME,1) OVER (ORDER BY CPU_TIME DESC) TOP2, "+
+				             "LEAD(SQL_ID,1) OVER (ORDER BY CPU_TIME DESC) SQL_ID2, "+
+				             "LEAD(CPU_TIME,2) OVER (ORDER BY CPU_TIME DESC) TOP3, "+
+				             "LEAD(SQL_ID,2) OVER (ORDER BY CPU_TIME DESC) SQL_ID3 "+
+				      "FROM (SELECT SQL_ID, "+
+				                   "CPU_TIME "+
+				            "FROM (SELECT SQL_ID, "+
+				                         "CPU_TIME "+
+				                  "FROM SQL_LIST "+
+				                  "ORDER BY CPU_TIME DESC) "+
+				            "WHERE ROWNUM <= 3) "+
+				      ") "+
+				"WHERE ROWNUM <=1 "+
+				"UNION ALL "+
+				"SELECT 'Elapsed Time Top3' TYPE, "+
+				       "SQL_ID1, "+
+				       "NVL(TOP1, 0) TOP1, "+
+				       "SQL_ID2, "+
+				       "NVL(TOP2, 0) TOP2, "+
+				       "SQL_ID3, "+
+				       "NVL(TOP3, 0) TOP3 "+
+				"FROM (SELECT ELAPSED_TIME TOP1, "+
+				             "SQL_ID SQL_ID1, "+
+				             "LEAD(ELAPSED_TIME,1) OVER (ORDER BY ELAPSED_TIME DESC) TOP2, "+
+				             "LEAD(SQL_ID,1) OVER (ORDER BY ELAPSED_TIME DESC) SQL_ID2, "+
+				             "LEAD(ELAPSED_TIME,2) OVER (ORDER BY ELAPSED_TIME DESC) TOP3, "+
+				             "LEAD(SQL_ID,2) OVER (ORDER BY ELAPSED_TIME DESC) SQL_ID3 "+
+				      "FROM (SELECT SQL_ID, "+
+				                   "ELAPSED_TIME "+
+				            "FROM (SELECT SQL_ID, "+
+				                         "ELAPSED_TIME "+
+				                  "FROM SQL_LIST "+
+				                  "ORDER BY ELAPSED_TIME DESC) "+
+				            "WHERE ROWNUM <= 3) "+
+				      ") "+
+				"WHERE ROWNUM <=1 "+
+				"UNION ALL "+
+				"SELECT 'Executions Top3' TYPE, "+
+				       "SQL_ID1, "+
+				       "NVL(TOP1, 0) TOP1, "+
+				       "SQL_ID2, "+
+				       "NVL(TOP2, 0) TOP2, "+
+				       "SQL_ID3, "+
+				       "NVL(TOP3, 0) TOP3 "+
+				"FROM (SELECT EXECUTIONS TOP1, "+
+				             "SQL_ID SQL_ID1, "+
+				             "LEAD(EXECUTIONS,1) OVER (ORDER BY EXECUTIONS DESC) TOP2, "+
+				             "LEAD(SQL_ID,1) OVER (ORDER BY EXECUTIONS DESC) SQL_ID2, "+
+				             "LEAD(EXECUTIONS,2) OVER (ORDER BY EXECUTIONS DESC) TOP3, "+
+				             "LEAD(SQL_ID,2) OVER (ORDER BY EXECUTIONS DESC) SQL_ID3 "+
+				      "FROM (SELECT SQL_ID, "+
+				                   "EXECUTIONS "+
+				            "FROM (SELECT SQL_ID, "+
+				                         "EXECUTIONS "+
+				                  "FROM SQL_LIST "+
+				                  "ORDER BY EXECUTIONS DESC) "+
+				            "WHERE ROWNUM <= 3) "+
+				      ") "+
+				"WHERE ROWNUM <=1 "+
+				"ORDER BY TYPE";
 
 	public static String onlineUsersSql = "SELECT COUNT(*) CNT "+
                                           "FROM V$SESSION "+
