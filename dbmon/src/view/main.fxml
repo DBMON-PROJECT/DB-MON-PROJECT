@@ -51,7 +51,8 @@
                 <Button fx:id="loginBtn" mnemonicParsing="false" onAction="#loginHandle" opacity="0.71" text="connect" />
                   <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#closeHandle" opacity="0.71" text="disconnect" />
                   <Button fx:id="startBtn" mnemonicParsing="false" onAction="#startHandle" opacity="0.71" text="start" />
-                  <HBox prefHeight="30.0" prefWidth="555.0" />
+                  <Button fx:id="refreshBtn" mnemonicParsing="false" onAction="#refreshHandle" opacity="0.71" text="refresh" visible="false" />
+                  <HBox prefHeight="30.0" prefWidth="521.0" />
                   <ImageView fitHeight="29.0" fitWidth="251.0" pickOnBounds="true" preserveRatio="true" style="-fx-scale-x: 2; -fx-scale-y: 1.3;">
                   	 <image>
                   	 <Image url="@../image/banner.gif" />

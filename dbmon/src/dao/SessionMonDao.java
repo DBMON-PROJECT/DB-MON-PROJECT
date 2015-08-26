@@ -67,6 +67,8 @@ public class SessionMonDao {
 				dto.setUsername(rs.getString("USERNAME"));
 				dto.setType(rs.getString("TYPE"));
 				dto.setCommand(rs.getString("COMMAND"));
+				dto.setStatus(rs.getString("STATUS"));
+				dto.setProgram(rs.getString("PROGRAM"));
 				list.add(dto);
 			}
 
@@ -83,7 +85,7 @@ public class SessionMonDao {
 	* 2. 작성일 : 2015. 8. 21. 오후 1:52:48
 	* 3. 작성자 : 정석준
 	* 4. 설명 : bind variable 항목의 데이터를 추출
-	* @param str
+	* @param sqlId
 	* @return
 	 */
 	public ArrayList<BindCheckDto> getBindCheckSqlData(String sqlId){

@@ -21,31 +21,31 @@ public class SchemaSQL {
 				  +"WHERE OWNER NOT IN ('SYS', "
 				              +"'OWBSYS_AUDIT', "
 				              +"'MDSYS', "
-				         //     +"'PUBLIC', "
-				          //    +"'OUTLN', "
+				              +"'PUBLIC', "
+				              +"'OUTLN', "
 				              +"'CTXSYS', "
 				              +"'OLAPSYS', "
 				              +"'FLOWS_FILES', "
 				              +"'OWBSYS', "
 				              +"'HR', "
 				              +"'SYSTEM', "
-				        //      +"'ORACLE_OCM', "
+				              +"'ORACLE_OCM', "
 				              +"'EXFSYS', "
 				              +"'APEX_030200', "
-				        //      +"'SCOTT', "
+				              +"'SCOTT', "
 				              +"'SH', "
 				              +"'OE', "
 				              +"'PM', "
 				              +"'DBSNMP', "
 				              +"'ORDSYS', "
 				              +"'ORDPLUGINS', "
-				         //     +"'SYSMAN', "
+				              +"'SYSMAN', "
 				              +"'IX', "
 				              +"'APPQOSSYS', "
 				              +"'XDB', "
-				         //     +"'ORDDATA', "
+				              +"'ORDDATA', "
 				              +"'BI', "
-				         //     +"'WMSYS', "
+				              +"'WMSYS', "
 				              +"'SI_INFORMTN_SCHEMA') "
 				  +"GROUP BY OWNER "
 				+"), DEF_USER AS ( "
@@ -97,6 +97,50 @@ public class SchemaSQL {
 				           +"OBJ_CNT "
 				     +"FROM DEF_USER) A, (SELECT COUNT(*) TOTAL_CNT "
 				                       +"FROM DBA_OBJECTS) B ";
+	public static String objectCntPer = "WITH N_DEF_USER AS ( "+
+					"SELECT OWNER, "+
+						   "COUNT(*) OBJ_CNT "+
+					"FROM DBA_OBJECTS "+
+					"WHERE OWNER NOT IN ('SYS', "+
+							            "'OWBSYS_AUDIT', "+
+							            "'MDSYS', "+
+							            "'PUBLIC', "+
+							            "'OUTLN', "+
+							            "'CTXSYS', "+
+							            "'OLAPSYS', "+
+							            "'FLOWS_FILES', "+
+							            "'OWBSYS', "+
+							            "'HR', "+
+							            "'SYSTEM', "+
+							            "'ORACLE_OCM', "+
+							            "'EXFSYS', "+
+							            "'APEX_030200', "+
+							            "'SCOTT', "+
+							            "'SH', "+
+							            "'OE', "+
+							            "'PM', "+
+							            "'DBSNMP', "+
+							            "'ORDSYS', "+
+							            "'ORDPLUGINS', "+
+							            "'SYSMAN', "+
+							            "'IX', "+
+							            "'APPQOSSYS', "+
+							            "'XDB', "+
+							            "'ORDDATA', "+
+							            "'BI', "+
+							            "'WMSYS', "+
+										"'SI_INFORMTN_SCHEMA') "+
+					"GROUP BY OWNER "+
+					") "+
+					"SELECT A.OWNER, "+
+					       "A.OBJ_CNT, "+
+					       "ROUND((A.OBJ_CNT/B.TOTAL_CNT)*100, 3) OBJ_PER "+       
+				    "FROM (SELECT OWNER, "+
+				    			 "OBJ_CNT "+
+				    	  "FROM N_DEF_USER) A, (SELECT SUM(OBJ_CNT) TOTAL_CNT "+
+				    			  			   "FROM N_DEF_USER) B ";
+
+	
 	/**
 	 * 현재 사용중인 사용자 계정들의 리스트
 	 */
@@ -213,12 +257,11 @@ public class SchemaSQL {
 			    +"B.MAX_DBF_MB, "         //각 테이블 스페이스 데이터파일의 가장 큰 용량
 			    +"B.MIN_DBF_MB, "         //각 테이블 스페이스 데이터파일의 가장 작은 용량
 			    +"B.AVG_DBF_MB, "         //각 테이블 스페이스 데이터파일의 평균 용량
-			    +"B.DISTRIBUTION DISTRIBUTION_PER, "   // 평균용량+최소용량/평균용량*100 
-			     
+			    +"B.DISTRIBUTION DISTRIBUTION_PER, "   // 평균용량+최소용량/평균용량*100 		     
 			    +"CASE WHEN B.DISTRIBUTION > 90 THEN 'DANGER' "  //위험
 			         +"WHEN B.DISTRIBUTION > 70 THEN 'WARNING' " //경고
 			         +"WHEN B.DISTRIBUTION > 50 THEN 'PURPOSE' " //적합
-			         +"WHEN B.DISTRIBUTION = 0  THEN 'PERFECT' " //완벽
+			         +"WHEN B.DISTRIBUTION <= 50  THEN 'PERFECT' " //완벽
 			    +"END DIST_STATUS, "   //분포 상태
 			    +"B.FILE_CNT "
 			+"FROM (SELECT   SUBSTR(A.TABLESPACE_NAME,1,30) TABLESPACE, "

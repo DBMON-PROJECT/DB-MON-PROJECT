@@ -18,6 +18,8 @@ public class SessionCheckDto {
 	private String username;
 	private String type;
 	private String command;
+	private String status;
+	private String program;
 	
 	public String getSqlId() {
 		return sqlId;
@@ -61,11 +63,25 @@ public class SessionCheckDto {
 	public void setCommand(String command) {
 		this.command = command;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getProgram() {
+		return program;
+	}
+	public void setProgram(String program) {
+		this.program = program;
+	}
 	
 	@Override
 	public String toString() {
 		return "SessionCheckDto [sqlId=" + sqlId + ", osUser=" + osUser
 				+ ", logonTime=" + logonTime + ", paddr=" + paddr
-				+ ", username=" + username + ", type=" + type + "]";
+				+ ", username=" + username + ", type=" + type + ", command="
+				+ command + ", status=" + status + ", program=" + program + "]";
 	}
+	
 }

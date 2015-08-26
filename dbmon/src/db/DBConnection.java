@@ -55,15 +55,17 @@ public class DBConnection {
 		}
 		
 		try{	
+			Connection connTemp = DriverManager.getConnection(url, userId, userPwd);
+			
 			if(isConnection()){
 				DbClose.close(conn);
 			}
-
-			conn = DriverManager.getConnection(url, userId, userPwd);
 			
+			conn = connTemp;
 			connectCnt++;
 		}catch(SQLException e){
 			DialogCommon.alert(e.getMessage());
+			return null;
 		}
 		
 		return conn;

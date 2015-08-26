@@ -8,7 +8,14 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.Glow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -223,7 +230,7 @@ public class RealtimeService {
 
 	    double bufferGetsValue1 = 0;
 	    double bufferGetsValue2 = 0;
-	    double bufferGetsValue3 = 0;                   
+	    double bufferGetsValue3 = 0;
 	    if(topSqlList.size() != 0){
 	    	bufferGetsValue1 = ((TopSqlDto)topSqlList.get(0)).getTop1();
 	    	bufferGetsValue2 = ((TopSqlDto)topSqlList.get(0)).getTop2();
@@ -376,6 +383,13 @@ public class RealtimeService {
 	    
 	    LOG.info("[JDBC Connection] - "+sb.toString());
 	    LOG.info("[Online Users] - "+onlineUsersCnt);
+	        
+	    if(topSqlList.size() != 0){
+	    	setTooltipTop3SQL(bufferGetstSeries, topSqlList, 0);
+		    setTooltipTop3SQL(cpuTimeSeries, topSqlList, 1);
+		    setTooltipTop3SQL(elapsedTimelSeries, topSqlList, 2);
+		    setTooltipTop3SQL(executionsSeries, topSqlList, 3);
+	    }
 	    
 	    if(bufferCacheValue < 90 || libraryCacheValue < 90 || dictionaryCacheValue < 90 ||
 	    		inMemoryValue < 90){
@@ -383,6 +397,67 @@ public class RealtimeService {
 		}
 	    
 	    return false;
+	}
+	
+	/**
+	 * 
+	* 1. 메소드명 : setTooltipTop3SQL
+	* 2. 작성일 : 2015. 8. 25. 오후 10:18:42
+	* 3. 작성자 : 길용현
+	* 4. 설명 : bar chart 툴팁 설정
+	* @param topSqlList
+	 */
+	private void setTooltipTop3SQL(XYChart.Series<String, Number> series, 
+			ArrayList<TopSqlDto> topSqlList, int index){
+		int cnt = 0;
+		
+	    for(final XYChart.Data<String,Number> data : series.getData()){
+	    	Tooltip tooltip = new Tooltip();
+	    	if(cnt==0){
+	    		tooltip.setText("SQLID : " + topSqlList.get(index).getSqlId1());
+	    	}else if(cnt==1){
+	    		tooltip.setText("SQLID : " + topSqlList.get(index).getSqlId2());
+	    	}else if(cnt==2){
+	    		tooltip.setText("SQLID : " + topSqlList.get(index).getSqlId3());
+	    	}
+	        Tooltip.install(data.getNode(), tooltip);  
+	        applyMouseEventsforTop3SQL(data);
+	        cnt++;
+	    }
+	}
+	
+	/**
+	 * 
+	* 1. 메소드명 : applyMouseEventsforTop3SQL
+	* 2. 작성일 : 2015. 8. 25. 오후 10:18:57
+	* 3. 작성자 : 길용현
+	* 4. 설명 : bar chart Node Mouse Event 설정
+	* @param data
+	 */
+	private void applyMouseEventsforTop3SQL(final XYChart.Data data){
+		final Node node = data.getNode();
+
+		node.setOnMouseEntered(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				node.setEffect(new Glow());
+			}
+		});
+
+		node.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				node.setEffect(null);
+			}
+		});
+
+		node.setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent mouseEvent) {
+
+			}
+		});
 	}
 	
 	/**

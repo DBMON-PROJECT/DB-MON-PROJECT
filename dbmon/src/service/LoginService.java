@@ -115,7 +115,7 @@ public class LoginService {
 		ArrayList<LoginDto> loginInfo = new ArrayList<LoginDto>();
 		
 		while(mc.find()){
-			loginInfo.add(new LoginDto(mc.group(1), mc.group(6), mc.group(8), mc.group(13),mc.group()));
+			loginInfo.add(new LoginDto(mc.group(1), mc.group(6), mc.group(8), mc.group(13),mc.group().trim()));
 		}
 
 		return loginInfo;

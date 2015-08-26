@@ -33,11 +33,10 @@ import javafx.stage.StageStyle;
 import javax.imageio.ImageIO;
 
 import service.MainThreadService;
-
 import common.ConstantCommon;
 import common.ControlCommon;
 import common.DialogCommon;
-
+import dao.SessionMonDao;
 import db.DBConnection;
 import db.DbClose;
 import dto.LoginDto;
@@ -49,6 +48,7 @@ public class MainController implements Initializable{
 	@FXML private Button loginBtn;
     @FXML private Button startBtn;
     @FXML private Button closeBtn;
+    @FXML private Button refreshBtn;
 
     // login combo box
     @FXML private ComboBox<String> loginHisCombo;
@@ -68,10 +68,9 @@ public class MainController implements Initializable{
     @FXML private Tab sessionTab;
     @FXML private Tab schemaTab;
     @FXML private Tab logTab;
-    
+
  	@Override
- 	public void initialize(URL location, ResourceBundle resources) {
- 		// TODO Auto-generated method stub
+ 	public void initialize(URL location, ResourceBundle resources) {	
  		tabPane.getSelectionModel().selectedItemProperty().addListener(
  				new ChangeListener<Tab>() {
  					@Override
@@ -82,21 +81,25 @@ public class MainController implements Initializable{
  							if(!(thread == null) && !(thread.getState().toString().equals("TERMINATED"))){
  								thread.resumeThread();
  							}
+ 							refreshBtn.setVisible(false);
  						}else if(newValue.getId().equals("sessionTab")){
  							SessionController.instance.sessionSearchHandle();
  							if(!(thread == null) && !(thread.getState().toString().equals("TERMINATED"))){
  								thread.suspendThread();
  							}
+ 							refreshBtn.setVisible(true);
  						}else if(newValue.getId().equals("schemaTab")){
  							SchemaController.instance.schemaSearchHandle();
  							if(!(thread == null) && !(thread.getState().toString().equals("TERMINATED"))){
  								thread.suspendThread();
  							}
+ 							refreshBtn.setVisible(true);
  						}else if(newValue.getId().equals("logTab")){
  							LogFileController.instance.logfileSearchHandle();
  							if(!(thread == null) && !(thread.getState().toString().equals("TERMINATED"))){
  								thread.suspendThread();
  							}
+ 							refreshBtn.setVisible(false);
  						}
  					}
  				}
@@ -269,6 +272,25 @@ public class MainController implements Initializable{
     		}
     	}else{
     		DialogCommon.alert("데이터베이스 연결이 되어있지 않습니다.");
+    	}
+    }
+    
+    /**
+     * 
+    * 1. 메소드명 : refreshHandle
+    * 2. 작성일 : 2015. 8. 25. 오후 10:30:29
+    * 3. 작성자 : 길용현
+    * 4. 설명 : Session Tab, Schema Tab refresh 기능
+    * @param event
+     */
+    @FXML
+    void refreshHandle(ActionEvent event) {
+    	Tab selectionTab = tabPane.getSelectionModel().getSelectedItem();
+    	
+    	if(selectionTab.equals(sessionTab)){
+    		SessionController.instance.sessionSearchHandle();
+    	}else if(selectionTab.equals(schemaTab)){
+    		SchemaController.instance.schemaSearchHandle();
     	}
     }
     

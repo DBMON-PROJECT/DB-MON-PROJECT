@@ -130,8 +130,11 @@ public class RealtimeMonDao {
 			while(rs.next()){
 				TopSqlDto dto = new TopSqlDto();
 				dto.setType(rs.getString("TYPE"));
+				dto.setSqlId1(rs.getString("SQL_ID1"));
 				dto.setTop1(rs.getDouble("TOP1"));
+				dto.setSqlId2(rs.getString("SQL_ID2"));
 				dto.setTop2(rs.getDouble("TOP2"));
+				dto.setSqlId3(rs.getString("SQL_ID3"));
 				dto.setTop3(rs.getDouble("TOP3"));
 				list.add(dto);
 			}

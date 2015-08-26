@@ -138,18 +138,6 @@
 
 
 /* -------- button CSS -------- */
-#sessionButton{
-	-fx-border-color: #D1D1D1;
-    -fx-border-width: 2.0;
-    -fx-background-color: transparent;
-    -fx-font-family: Segoe UI, Helvetica, Arial, "sans-serif";
-    -fx-font-size: 10pt;
-    -fx-text-fill: #D1D1D1;
-    -fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 1.0, 2.0;
-    -fx-background-radius: 16px;
-    -fx-border-radius: 100px;
-}
-
 .button {
     -fx-padding: 5 22 5 22;   
     -fx-border-color: #e2e2e2;
@@ -166,19 +154,6 @@
 .button:hover {
     -fx-background-color: #3a3a3a;
 }
-/*     
-.button {
-    -fx-border-color: #C2C2C2;
-    -fx-border-width: 2.0;
-    -fx-background-color: transparent;
-    -fx-font-family: sans-serif;
-    -fx-font-size: 10pt;
-    -fx-text-fill: #C2C2C2;
-    -fx-background-insets: 0.0 0.0 0.0 0.0, 0.0, 1.0, 2.0;
-    -fx-background-radius: 16px;
-    -fx-border-radius: 100px;
-}
-*/
 
 /*
 .button:hover{

@@ -157,7 +157,9 @@ public class SessionSQL {
 				  "180, 'CREATE OUTLINE', "+
 				  "181, 'DROP OUTLINE', "+
 				  "182, 'UPDATE INDEXES', "+
-				  "183, 'ALTER OPERATOR'), 'UNKNOWN') COMMAND "+
+				  "183, 'ALTER OPERATOR'), 'UNKNOWN') COMMAND, "+
+				  "STATUS, "+
+				  "PROGRAM "+
 		"FROM V$SESSION "+
 		"WHERE USERNAME IS NOT NULL "+
 		"AND USERNAME NOT IN ('SYSMAN', "+

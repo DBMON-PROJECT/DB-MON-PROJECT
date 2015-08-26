@@ -61,6 +61,10 @@ public class RealtimeController implements Initializable{
 		setOnlineUserLabel("0");
 	}
 	
+	public LineChart<String, Number> getBufCacheChart(){
+		return bufCacheChart;
+	}
+	
 	public Label getOnlineUserLabel(){
 		return onlineUsersLabel;
 	}

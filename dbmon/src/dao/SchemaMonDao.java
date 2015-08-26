@@ -59,12 +59,11 @@ public class SchemaMonDao {
 		try {
 			Connection conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(SchemaSQL.objectcomp);
+			rs = stmt.executeQuery(SchemaSQL.objectCntPer);
 
 			while (rs.next()) {
 				list.add(new PieChart.Data(rs.getString(1), rs.getDouble(2)));
 			}
-			
 		} catch (SQLException e) {
 			LOG.debug(e.getMessage());
 		} finally {

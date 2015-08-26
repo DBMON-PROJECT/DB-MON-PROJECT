@@ -49,14 +49,16 @@ public class TableColumnCommon {
 	* @return
 	 */
 	public String[] getSessionCheckColumn(){
-		String[] type = new String[7];
+		String[] type = new String[9];
 		type[0] = "paddr";
 		type[1] = "osUser";
 		type[2] = "sqlId";
 		type[3] = "command";
 		type[4] = "username";
 		type[5] = "type";
-		type[6] = "logonTime";
+		type[6] = "status";
+		type[7] = "program";
+		type[8] = "logonTime";
 		
 		return type;		
 	}
